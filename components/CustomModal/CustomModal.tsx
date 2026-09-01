@@ -13,6 +13,7 @@ const style = {
   boxShadow: 24,
   p: 4,
   outline: 'none',
+  borderRadius: '4px',
 };
 
 interface CustomModalProps {
