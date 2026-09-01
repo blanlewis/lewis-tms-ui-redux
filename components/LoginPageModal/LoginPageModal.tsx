@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Box } from "@mui/material";
 import Image from "next/image";
 import CustomModal from "@/components/CustomModal";
@@ -10,12 +11,13 @@ import { useCustomHook } from "@/app/utils/hook";
 const LoginPageModal = () => {
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const { loginState } = useCustomHook();
 
   const handleLogin = async () => {
     const isLoggedIn = await loginState(loginId, password);
-    console.log("Login response:", isLoggedIn);
+    if (isLoggedIn) router.push("/");
   };
 
   return (
@@ -50,7 +52,7 @@ const LoginPageModal = () => {
             buttonText="Login"
             buttonTextOrIconColor="#FFFFFF"
             icon={null}
-            isButtonDisabled={false}
+            isButtonDisabled={!loginId || !password}
             onButtonClicked={handleLogin}
             buttonMinWidth="100%"
             buttonHeight="40px"
