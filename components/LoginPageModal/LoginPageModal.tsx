@@ -5,32 +5,17 @@ import Image from "next/image";
 import CustomModal from "@/components/CustomModal";
 import CustomTextField from "@/components/CustomTextField";
 import CustomButton from "@/components/CustomButton";
+import { useCustomHook } from "@/app/utils/hook";
 
 const LoginPageModal = () => {
-    const [loginId, setLoginId] = useState("");
+  const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
 
+  const { loginState } = useCustomHook();
+
   const handleLogin = async () => {
-    const response = await fetch("http://localhost:5001/graphql", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: `
-          mutation {
-            isLogin(
-              loginId: "${loginId}"
-              password: "${password}"
-            )
-          }
-        `,
-      }),
-    });
-
-    const data = await response.json();
-
-    console.log("Login response:", data);
+    const isLoggedIn = await loginState(loginId, password);
+    console.log("Login response:", isLoggedIn);
   };
 
   return (

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { CustomHookProvider } from "./utils/context";
 
 export const metadata: Metadata = {
   title: "Lewis TMS",
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <CustomHookProvider>{children}</CustomHookProvider>
+      </body>
     </html>
   );
 }
