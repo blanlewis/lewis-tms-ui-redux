@@ -95,4 +95,3 @@ const CustomButton = ({
 };
 
 export default CustomButton;
-export type { CustomButtonProps };
