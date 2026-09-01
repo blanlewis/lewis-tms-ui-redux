@@ -16,8 +16,10 @@ const LoginPageModal = () => {
   const { loginState } = useCustomHook();
 
   const handleLogin = async () => {
-    const isLoggedIn = await loginState(loginId, password);
-    if (isLoggedIn) router.push("/");
+    const loginResponse = await loginState(loginId, password);
+    if (loginResponse.success) {
+      router.push("/");
+    }
   };
 
   return (

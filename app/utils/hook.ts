@@ -15,9 +15,17 @@ const useCustomHook = () => {
     };
 
     const loginState = async (loginId: string, password: string) => {
-        const isLoggedIn = await getLoginUserMutationApi(loginId, password);
-        if (isLoggedIn) setCustomHookState({ loginId });
-        return isLoggedIn;
+
+        const loginResponse =
+            await getLoginUserMutationApi(loginId, password);
+
+        if (loginResponse.success) {
+            setCustomHookState({
+                loginId: loginResponse.loginId
+            });
+        }
+
+        return loginResponse;
     };
 
     return {

@@ -4,7 +4,10 @@ const getLoginUserMutationQuery = (loginId: string, password: string) => {
             isLogin(
               loginId: "${loginId}"
               password: "${password}"
-            )
+            ) {
+              success
+              loginId
+            }
         }
     `;
 };
