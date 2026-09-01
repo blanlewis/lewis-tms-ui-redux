@@ -12,6 +12,7 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  outline: 'none',
 };
 
 interface CustomModalProps {
@@ -29,7 +30,6 @@ const CustomModal = ({ open, onClose, modalContent }: CustomModalProps) => {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        sx={{outline:"none"}}
       >
         <Box sx={style}>
             {modalContent}
