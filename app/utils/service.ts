@@ -1,4 +1,4 @@
-import { getLoginUserMutationQuery } from "./graphqlQueries";
+import { getLoginUserMutationQuery,getCurrentUserQuery  } from "./graphqlQueries";
 import { LoginResponse } from "./types";
 
 const getLoginUserMutationApi = async (
@@ -10,6 +10,10 @@ const getLoginUserMutationApi = async (
         query: getLoginUserMutationQuery(loginId, password),
     };
 
+    console.log(
+    "GRAPHQL URL:",
+    process.env.NEXT_PUBLIC_GRAPHQL_URL
+);
     try {
         const result = await fetch(
             process.env.NEXT_PUBLIC_GRAPHQL_URL!,
@@ -18,6 +22,7 @@ const getLoginUserMutationApi = async (
                 headers: {
                     "Content-Type": "application/json",
                 },
+                credentials: "include",
                 body: JSON.stringify(usersRequest),
             }
         );
@@ -36,4 +41,37 @@ const getLoginUserMutationApi = async (
     }
 };
 
-export { getLoginUserMutationApi };
+const getCurrentUserApi = async (): Promise<string | null> => {
+
+    const usersRequest = {
+        query: getCurrentUserQuery(),
+    };
+
+    try {
+        const result = await fetch(
+            process.env.NEXT_PUBLIC_GRAPHQL_URL!,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify(usersRequest),
+            }
+        );
+
+        if (!result.ok) {
+            throw new Error(`HTTP Error: ${result.status}`);
+        }
+
+        const jsonResult = await result.json();
+
+        return jsonResult.data.currentUser;
+
+    } catch (error) {
+        console.error("Failed to fetch current user:", error);
+        throw error;
+    }
+};
+
+export { getLoginUserMutationApi, getCurrentUserApi };

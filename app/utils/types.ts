@@ -10,10 +10,12 @@ type CustomHookAction =
 
 interface CustomHookState {
   loginId: string;
+  isLoading: boolean;
 }
 
 const customHookInitialState = {
   loginId: "",
+  isLoading: false,
 };
 
 export type { CustomHookState, CustomHookAction,LoginResponse };

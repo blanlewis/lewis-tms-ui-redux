@@ -12,4 +12,15 @@ const getLoginUserMutationQuery = (loginId: string, password: string) => {
     `;
 };
 
-export { getLoginUserMutationQuery };
+const getCurrentUserQuery = () => {
+    return `
+        query {
+            currentUser
+        }
+    `;
+};
+
+export {
+    getLoginUserMutationQuery,
+    getCurrentUserQuery,
+};
