@@ -47,6 +47,9 @@ const useCustomHook = () => {
             console.error("Failed to get current user:", error);
             throw error;
         } finally {
+            setCustomHookState({
+                isSessionChecked: true,
+            });
             setIsLoadingState(false);
         }
     };

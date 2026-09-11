@@ -9,13 +9,15 @@ type CustomHookAction =
     { type: CustomHookActionEnum.SET_CUSTOM_HOOK_DATA; payload: Partial<CustomHookState> };
 
 interface CustomHookState {
-  loginId: string;
-  isLoading: boolean;
+    loginId: string;
+    isLoading: boolean;
+    isSessionChecked: boolean;
 }
 
 const customHookInitialState = {
-  loginId: "",
-  isLoading: false,
+    loginId: "",
+    isLoading: false,
+    isSessionChecked: false,
 };
 
 export type { CustomHookState, CustomHookAction,LoginResponse };
