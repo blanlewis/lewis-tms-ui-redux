@@ -24,6 +24,7 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
       ]}
       secondaryListItems={[]}
       appBody={children}
+      toolbarAvatar={loginId}
     />
   );
 };

@@ -1,5 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
+import CustomAvatar from "@/components/CustomAvatar";
 
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import {
@@ -16,6 +17,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Stack,
 } from "@mui/material";
 import type { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import {
@@ -167,9 +169,10 @@ interface AppTopBarProps {
   title: string;
   open: boolean;
   onOpen: () => void;
+  toolbarAvatar: string;
 }
 
-const AppTopBar = ({ title, open, onOpen }: AppTopBarProps) => (
+const AppTopBar = ({ title, open, onOpen, toolbarAvatar }: AppTopBarProps) => (
   <StyledAppBar position="fixed" open={open}>
     <Toolbar
       sx={{
@@ -178,6 +181,8 @@ const AppTopBar = ({ title, open, onOpen }: AppTopBarProps) => (
         },
       }}
     >
+      <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center", justifyContent: "space-between",width:"100%" }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
       <IconButton
         color="inherit"
         aria-label="open drawer"
@@ -190,6 +195,9 @@ const AppTopBar = ({ title, open, onOpen }: AppTopBarProps) => (
       <Typography variant="h6" noWrap component="div">
         {title}
       </Typography>
+      </Box>
+      <CustomAvatar toolbarAvatar={toolbarAvatar} />
+      </Stack>
     </Toolbar>
   </StyledAppBar>
 );
@@ -253,6 +261,7 @@ interface CommonMiniDrawerLayoutProps {
   firstListItems: NavItem[];
   secondaryListItems: NavItem[];
   appBody: React.ReactNode;
+  toolbarAvatar: string;
 }
 
 const CommonMiniDrawerLayout = ({
@@ -260,6 +269,7 @@ const CommonMiniDrawerLayout = ({
   firstListItems,
   secondaryListItems,
   appBody,
+  toolbarAvatar,
 }: CommonMiniDrawerLayoutProps) => {
   const [open, setOpen] = React.useState(false);
 
@@ -280,6 +290,7 @@ const CommonMiniDrawerLayout = ({
         title={appHeaderTitle}
         open={open}
         onOpen={() => setOpen(true)}
+        toolbarAvatar={toolbarAvatar}
       />
 
       <MiniDrawer
