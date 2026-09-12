@@ -34,22 +34,72 @@ const ReflexDragger = ({
   isDraggerIconRequired = false,
 }: ReflexDraggerProps): JSX.Element => {
   return (
-    <>
+    <div
+      onDragStart={(e) => e.preventDefault()}
+      style={{
+        width: "100%",
+        height: "100%",
+        userSelect: "none",
+        WebkitUserSelect: "none",
+      }}
+    >
       <GlobalStyles
         styles={{
+          ".reflex-container": {
+            userSelect: "none",
+            WebkitUserSelect: "none",
+          },
+
           ".reflex-element.vertical": {
             height: "100%",
+          },
+
+          ".reflex-container > .reflex-splitter": {
+            touchAction: "none",
+            userSelect: "none",
+            WebkitUserSelect: "none",
+            zIndex: 10,
+          },
+
+          ".reflex-container.vertical > .reflex-splitter": {
+            cursor: "col-resize !important",
+          },
+
+          ".reflex-container.horizontal > .reflex-splitter": {
+            cursor: "row-resize !important",
+          },
+
+          ".reflex-container.reflex-resizing": {
+            cursor:
+              reflexContainerOrientation === "vertical"
+                ? "col-resize !important"
+                : "row-resize !important",
+            userSelect: "none !important",
+            WebkitUserSelect: "none !important",
+          },
+
+          ".reflex-container.reflex-resizing *": {
+            userSelect: "none !important",
+            WebkitUserSelect: "none !important",
+          },
+
+          "body.reflex-col-resize, body.reflex-col-resize *": {
+            cursor: "col-resize !important",
+            userSelect: "none !important",
+            WebkitUserSelect: "none !important",
+          },
+
+          "body.reflex-row-resize, body.reflex-row-resize *": {
+            cursor: "row-resize !important",
+            userSelect: "none !important",
+            WebkitUserSelect: "none !important",
           },
 
           ".custom-reflex-splitter": {
             backgroundColor: "rgb(233, 241, 248)",
           },
 
-          ".custom-reflex-splitter:hover": {
-            backgroundColor: "rgb(193, 215, 233) !important",
-          },
-
-          ".custom-reflex-splitter:active": {
+          ".custom-reflex-splitter:hover, .custom-reflex-splitter.active": {
             backgroundColor: "rgb(193, 215, 233) !important",
           },
         }}
@@ -93,6 +143,8 @@ const ReflexDragger = ({
               style={{
                 width: splitterWidth + splitterWidth,
                 transform: reflexContainerOrientation === "vertical" ? "rotate(90deg)" : "none",
+                pointerEvents: "none",
+                userSelect: "none",
               }}
             />
           )}
@@ -105,7 +157,7 @@ const ReflexDragger = ({
           {rightpaneComponent}
         </ReflexElement>
       </ReflexContainer>
-    </>
+    </div>
   );
 };
 
