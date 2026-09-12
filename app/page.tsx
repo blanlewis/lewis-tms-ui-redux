@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { redirect } from "next/navigation";
 import { useCustomHook } from "./utils/hook";
 import {  Box, CircularProgress } from '@mui/material';
+import MyReactConceptLayout from "@/components/MyReactConceptLayout/MyReactConceptLayout";
 
 export default function Home() {
     const {
@@ -34,5 +35,5 @@ export default function Home() {
         redirect("/login");
     }
 
-    return <div>Welcome {loginId}</div>;
+    return <MyReactConceptLayout />;
 }

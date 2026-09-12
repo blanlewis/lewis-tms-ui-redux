@@ -1,7 +1,6 @@
 "use client";
-import { createContext, useReducer, ReactNode, Dispatch } from "react";
-import { CustomHookState, CustomHookAction } from "./types";
-import { customHookInitialState } from "./types";
+import { createContext, useReducer, useMemo, ReactNode, Dispatch } from "react";
+import { CustomHookState, CustomHookAction, customHookInitialState } from "./types";
 import { customHookReducer } from "./reducer";
 
 interface CustomHookContextValue {
@@ -13,9 +12,10 @@ const CustomHookContext = createContext<CustomHookContextValue | null>(null);
 
 const CustomHookProvider = ({ children }: { children: ReactNode }) => {
     const [state, dispatch] = useReducer(customHookReducer, customHookInitialState);
+    const value = useMemo(() => ({ state, dispatch }), [state]);
 
     return (
-        <CustomHookContext.Provider value={{ state, dispatch }}>
+        <CustomHookContext.Provider value={value}>
             {children}
         </CustomHookContext.Provider>
     );

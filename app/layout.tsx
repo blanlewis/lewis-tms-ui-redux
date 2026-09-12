@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { CustomHookProvider } from "./utils/context";
+import AppWrapper from "@/components/AppWrapper/AppWrapper";
 
 export const metadata: Metadata = {
   title: "Lewis TMS",
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
-        <CustomHookProvider>{children}</CustomHookProvider>
+        <CustomHookProvider>
+          <AppWrapper>{children}</AppWrapper>
+        </CustomHookProvider>
       </body>
     </html>
   );
