@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { CustomHookProvider } from "./utils/context";
 import AppWrapper from "@/components/AppWrapper/AppWrapper";
+import CustomSnackbar from "@/components/CustomSnackbar/CustomSnackbar";
 
 export const metadata: Metadata = {
   title: "Lewis TMS",
@@ -18,6 +19,7 @@ export default function RootLayout({
       <body suppressHydrationWarning>
         <CustomHookProvider>
           <AppWrapper>{children}</AppWrapper>
+          <CustomSnackbar />
         </CustomHookProvider>
       </body>
     </html>

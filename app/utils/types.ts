@@ -12,13 +12,30 @@ interface CustomHookState {
     loginId: string;
     isLoading: boolean;
     isSessionChecked: boolean;
+    snackbar: {
+        open: boolean;
+        message: string;
+        severity: SnackbarSeverityEnum;
+    };
+}
+
+enum SnackbarSeverityEnum {
+    SUCCESS = "success",
+    ERROR = "error",
+    WARNING = "warning",
+    INFO = "info",
 }
 
 const customHookInitialState = {
     loginId: "",
     isLoading: false,
     isSessionChecked: false,
+    snackbar:{
+        open: false,
+        message: "",
+        severity: SnackbarSeverityEnum.INFO
+    }
 };
 
 export type { CustomHookState, CustomHookAction,LoginResponse };
-export { customHookInitialState, CustomHookActionEnum };
+export { customHookInitialState, CustomHookActionEnum, SnackbarSeverityEnum };

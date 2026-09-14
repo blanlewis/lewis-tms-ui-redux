@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { CustomHookContext } from "./context";
-import { CustomHookState, CustomHookActionEnum } from "./types";
+import { CustomHookState, CustomHookActionEnum, SnackbarSeverityEnum } from "./types";
 import { getLoginUserMutationApi,getCurrentUserApi } from "./service";
 
 const useCustomHook = () => {
@@ -19,13 +19,17 @@ const useCustomHook = () => {
         try {
             const loginResponse =
                 await getLoginUserMutationApi(loginId, password);
-            if (loginResponse.success) {
+            if (loginResponse?.success) {
                 setCustomHookState({
                     loginId: loginResponse.loginId,
                 });
+                setSnackbarState(true, "Login successful", SnackbarSeverityEnum.SUCCESS);
+            } else {
+                setSnackbarState(true, "Login failed: Invalid credentials", SnackbarSeverityEnum.ERROR);
             }
             return loginResponse;
         } catch (error) {
+            setSnackbarState(true, "Login failed. Please try again.", SnackbarSeverityEnum.ERROR);
             console.error("Login failed:", error);
             throw error;
         } finally {
@@ -59,12 +63,24 @@ const useCustomHook = () => {
             isLoading,
         });
     };
+
+    const setSnackbarState = (open: boolean, message: string, severity: SnackbarSeverityEnum) => {
+        setCustomHookState({
+            snackbar: {
+                open,
+                message,
+                severity,
+            },
+        });
+    };
+
     return {
         ...state,
         setCustomHookState,
         loginState,
         getCurrentUser,
         setIsLoadingState,
+        setSnackbarState,
     };
 };
 

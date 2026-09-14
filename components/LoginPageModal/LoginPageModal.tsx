@@ -18,7 +18,7 @@ const LoginPageModal = () => {
   const handleLogin = async () => {
     const loginResponse = await loginState(loginId, password);
     console.log(loginResponse);
-    if (loginResponse.success) {
+    if (loginResponse?.success) {
       router.push("/");
     }
   };
