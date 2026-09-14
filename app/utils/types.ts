@@ -17,6 +17,13 @@ interface CustomHookState {
         message: string;
         severity: SnackbarSeverityEnum;
     };
+    pageLayout: PageLayoutEnum
+}
+
+enum PageLayoutEnum {
+    TWO_PANEL_LAYOUT = "2 panel layout",
+    THREE_PANEL_LAYOUT = "3 panel layout",
+    CLASSIC = "classic",
 }
 
 enum SnackbarSeverityEnum {
@@ -34,8 +41,9 @@ const customHookInitialState = {
         open: false,
         message: "",
         severity: SnackbarSeverityEnum.INFO
-    }
+    },
+    pageLayout: PageLayoutEnum.TWO_PANEL_LAYOUT,
 };
 
 export type { CustomHookState, CustomHookAction,LoginResponse };
-export { customHookInitialState, CustomHookActionEnum, SnackbarSeverityEnum };
+export { customHookInitialState, CustomHookActionEnum, SnackbarSeverityEnum, PageLayoutEnum };

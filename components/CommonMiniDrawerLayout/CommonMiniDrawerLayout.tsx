@@ -37,8 +37,9 @@ const TOOLBAR_HEIGHT = 48;
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface NavItem {
-  label: string;
-  route: string;
+  label?: string;
+  route?: string;
+  customNode?: React.ReactNode;
 }
 
 // ─── Styled primitives ────────────────────────────────────────────────────────
@@ -135,31 +136,40 @@ interface NavListProps {
 }
 
 const NavList = ({ items, open }: NavListProps) => (
-  <List sx={{p:0}}>
-    {items.map(({ label, route }, index) => (
-      <ListItem key={label} disablePadding sx={{ display: "block" }}>
-        <ListItemButton
-          {...(route ? { component: Link, href: route } : {})}
-          sx={[
-            { minHeight: 48, px: 2.5 },
-            open ? { justifyContent: "initial" } : { justifyContent: "center" },
-          ]}
-        >
-          <ListItemIcon
+  <List sx={{ p: 0 }}>
+    {items.map((item, index) => {
+      if (item.customNode) {
+        return (
+          <ListItem key={item.label ?? `custom-item-${item.route ?? String(index)}`} sx={{ display: "flex", alignItems: "center", justifyContent: "center", px: open ? 2 : 1, py: 1 }}>
+            {item.customNode}
+          </ListItem>
+        );
+      }
+      return (
+        <ListItem key={item.label} disablePadding sx={{ display: "block" }}>
+          <ListItemButton
+            {...(item.route ? { component: Link, href: item.route } : {})}
             sx={[
-              { minWidth: 0, justifyContent: "center" },
-              open ? { mr: 3 } : { mr: "auto" },
+              { minHeight: 48, px: 2.5 },
+              open ? { justifyContent: "initial" } : { justifyContent: "center" },
             ]}
           >
-            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-          </ListItemIcon>
-          <ListItemText
-            primary={label}
-            sx={{ opacity: open ? 1 : 0 }}
-          />
-        </ListItemButton>
-      </ListItem>
-    ))}
+            <ListItemIcon
+              sx={[
+                { minWidth: 0, justifyContent: "center" },
+                open ? { mr: 3 } : { mr: "auto" },
+              ]}
+            >
+              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+            </ListItemIcon>
+            <ListItemText
+              primary={item.label}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
+          </ListItemButton>
+        </ListItem>
+      );
+    })}
   </List>
 );
 

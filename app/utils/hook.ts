@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { CustomHookContext } from "./context";
-import { CustomHookState, CustomHookActionEnum, SnackbarSeverityEnum } from "./types";
+import { CustomHookState, CustomHookActionEnum, SnackbarSeverityEnum, PageLayoutEnum } from "./types";
 import { getLoginUserMutationApi,getCurrentUserApi } from "./service";
 
 const useCustomHook = () => {
@@ -74,6 +74,12 @@ const useCustomHook = () => {
         });
     };
 
+    const setPageLayout = (layout: PageLayoutEnum) => {
+        setCustomHookState({
+            pageLayout: layout,
+        });
+    };
+
     return {
         ...state,
         setCustomHookState,
@@ -81,6 +87,7 @@ const useCustomHook = () => {
         getCurrentUser,
         setIsLoadingState,
         setSnackbarState,
+        setPageLayout,
     };
 };
 

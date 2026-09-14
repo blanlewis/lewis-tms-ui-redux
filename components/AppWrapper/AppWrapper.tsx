@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useCustomHook } from "@/app/utils/hook";
+import LayoutSwitchToggle from "@/components/LayoutSwitchToggle";
 
 const CommonMiniDrawerLayout = dynamic(
   () => import("@/components/CommonMiniDrawerLayout"),
@@ -22,7 +23,9 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
       firstListItems={[
         { label: "Lewis TMS Dashboard", route: "/lewisTmsDashboard" },
       ]}
-      secondaryListItems={[]}
+      secondaryListItems={[
+        { label: "layout-switch", customNode: <LayoutSwitchToggle /> }
+      ]}
       appBody={children}
       toolbarAvatar={loginId}
     />
