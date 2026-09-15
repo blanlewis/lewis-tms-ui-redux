@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { CustomHookProvider } from "./utils/context";
 import AppWrapper from "@/components/AppWrapper/AppWrapper";
 import CustomSnackbar from "@/components/CustomSnackbar/CustomSnackbar";
@@ -17,10 +18,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
-        <CustomHookProvider>
-          <AppWrapper>{children}</AppWrapper>
-          <CustomSnackbar />
-        </CustomHookProvider>
+        <AppRouterCacheProvider>
+          <CustomHookProvider>
+            <AppWrapper>{children}</AppWrapper>
+            <CustomSnackbar />
+          </CustomHookProvider>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );

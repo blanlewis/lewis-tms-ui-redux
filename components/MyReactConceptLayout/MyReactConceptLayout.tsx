@@ -1,7 +1,11 @@
+"use client";
 import { Box } from "@mui/material";
 import ReflexDragger from "@/components/ReflexDragger";
 import { useCustomHook } from "@/app/utils/hook";
 import { PageLayoutEnum } from "@/app/utils/types";
+// import MapComponent from "@/components/MapComponent";
+import dynamic from "next/dynamic"; 
+const MapComponent = dynamic(() => import("@/components/MapComponent"), { ssr: false, });
 
 const TwoPanelLayout = () => {
   return (
@@ -42,7 +46,7 @@ const TwoPanelLayout = () => {
               justifyContent: "center",
             }}
           >
-            Right Side (50%)
+            <MapComponent />
           </Box>
         }
         minimumLeftPaneWidth={100}
