@@ -1,7 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
 import CustomAvatar from "@/components/CustomAvatar";
-
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import {
   Box,
@@ -27,6 +26,7 @@ import {
   MoveToInbox as InboxIcon,
   Mail as MailIcon,
 } from "@mui/icons-material";
+import { useCustomHook } from '@/app/utils/hook';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -180,9 +180,10 @@ interface AppTopBarProps {
   open: boolean;
   onOpen: () => void;
   toolbarAvatar: string;
+  setAnchorElForPopper: (anchorEl: HTMLElement | null) => void;
 }
 
-const AppTopBar = ({ title, open, onOpen, toolbarAvatar }: AppTopBarProps) => (
+const AppTopBar = ({ title, open, onOpen, toolbarAvatar, setAnchorElForPopper }: AppTopBarProps) => (
   <StyledAppBar position="fixed" open={open}>
     <Toolbar
       sx={{
@@ -206,7 +207,9 @@ const AppTopBar = ({ title, open, onOpen, toolbarAvatar }: AppTopBarProps) => (
         {title}
       </Typography>
       </Box>
-      <CustomAvatar toolbarAvatar={toolbarAvatar} />
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }} onClick={(event) => setAnchorElForPopper(event.currentTarget)}>
+        <CustomAvatar toolbarAvatar={toolbarAvatar} />
+      </Box>
       </Stack>
     </Toolbar>
   </StyledAppBar>
@@ -282,6 +285,7 @@ const CommonMiniDrawerLayout = ({
   toolbarAvatar,
 }: CommonMiniDrawerLayoutProps) => {
   const [open, setOpen] = React.useState(false);
+  const { setAnchorElForPopper } = useCustomHook();
 
   return (
     <Box
@@ -301,6 +305,7 @@ const CommonMiniDrawerLayout = ({
         open={open}
         onOpen={() => setOpen(true)}
         toolbarAvatar={toolbarAvatar}
+        setAnchorElForPopper={setAnchorElForPopper}
       />
 
       <MiniDrawer

@@ -4,6 +4,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { CustomHookProvider } from "./utils/context";
 import AppWrapper from "@/components/AppWrapper/AppWrapper";
 import CustomSnackbar from "@/components/CustomSnackbar/CustomSnackbar";
+import CustomPopper from "@/components/CustomPopper/CustomPopper";
 
 export const metadata: Metadata = {
   title: "Lewis TMS",
@@ -22,6 +23,7 @@ export default function RootLayout({
           <CustomHookProvider>
             <AppWrapper>{children}</AppWrapper>
             <CustomSnackbar />
+            <CustomPopper />
           </CustomHookProvider>
         </AppRouterCacheProvider>
       </body>
