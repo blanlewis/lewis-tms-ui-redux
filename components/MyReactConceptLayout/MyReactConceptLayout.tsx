@@ -3,8 +3,9 @@ import { Box } from "@mui/material";
 import ReflexDragger from "@/components/ReflexDragger";
 import { useCustomHook } from "@/app/utils/hook";
 import { PageLayoutEnum } from "@/app/utils/types";
-// import MapComponent from "@/components/MapComponent";
-import dynamic from "next/dynamic"; 
+import dynamic from "next/dynamic";
+import BookingPanel from "@/components/BookingPanel";
+
 const MapComponent = dynamic(() => import("@/components/MapComponent"), { ssr: false, });
 
 const TwoPanelLayout = () => {
@@ -26,12 +27,9 @@ const TwoPanelLayout = () => {
               height: "100%",
               boxSizing: "border-box",
               border: "1px solid red",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
             }}
           >
-            Left Side (50%)
+            <BookingPanel />
           </Box>
         }
         rightpaneComponent={
@@ -51,7 +49,7 @@ const TwoPanelLayout = () => {
         }
         minimumLeftPaneWidth={100}
         minimumRightPaneWidth={100}
-        splitterWidth={10}
+        splitterWidth={4}
         initialLeftFlex={0.5}
         initialRightFlex={0.5}
         isDraggerIconRequired={false}
@@ -76,19 +74,16 @@ const ThreePanelLayout = () => {
           <ReflexDragger
             reflexContainerOrientation="horizontal"
             leftpaneComponent={
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  boxSizing: "border-box",
-                  border: "1px solid red",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                Left Top
-              </Box>
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                boxSizing: "border-box",
+                border: "1px solid red",
+              }}
+            >
+              <BookingPanel />
+            </Box>
             }
             rightpaneComponent={
               <Box
@@ -107,7 +102,7 @@ const ThreePanelLayout = () => {
             }
             minimumLeftPaneWidth={50}
             minimumRightPaneWidth={50}
-            splitterWidth={10}
+            splitterWidth={4}
             initialLeftFlex={0.5}
             initialRightFlex={0.5}
             isDraggerIconRequired={false}
@@ -125,12 +120,12 @@ const ThreePanelLayout = () => {
               justifyContent: "center",
             }}
           >
-            Right Side (50%)
+            <MapComponent />
           </Box>
         }
         minimumLeftPaneWidth={100}
         minimumRightPaneWidth={100}
-        splitterWidth={10}
+        splitterWidth={4}
         initialLeftFlex={0.5}
         initialRightFlex={0.5}
         isDraggerIconRequired={false}
@@ -161,12 +156,9 @@ const ClassicLayout = () => {
                   height: "100%",
                   boxSizing: "border-box",
                   border: "1px solid red",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                 }}
               >
-                Top Left
+                <BookingPanel />
               </Box>
             }
             rightpaneComponent={
@@ -181,12 +173,12 @@ const ClassicLayout = () => {
                   justifyContent: "center",
                 }}
               >
-                Top Right
+                <MapComponent />
               </Box>
             }
             minimumLeftPaneWidth={50}
             minimumRightPaneWidth={50}
-            splitterWidth={10}
+            splitterWidth={4}
             initialLeftFlex={0.5}
             initialRightFlex={0.5}
             isDraggerIconRequired={false}
@@ -209,7 +201,7 @@ const ClassicLayout = () => {
         }
         minimumLeftPaneWidth={100}
         minimumRightPaneWidth={100}
-        splitterWidth={10}
+        splitterWidth={4}
         initialLeftFlex={0.5}
         initialRightFlex={0.5}
         isDraggerIconRequired={false}

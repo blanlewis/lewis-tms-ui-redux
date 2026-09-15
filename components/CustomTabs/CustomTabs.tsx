@@ -6,7 +6,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 interface TabDataProps {
   readonly label: string;
   readonly value: string;
-  readonly content?: React.ReactNode;
+  readonly content: React.ReactNode;
 }
 
 interface CustomTabsProps {

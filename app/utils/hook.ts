@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { CustomHookContext } from "./context";
-import { CustomHookState, CustomHookActionEnum, SnackbarSeverityEnum, PageLayoutEnum } from "./types";
+import { CustomHookState, CustomHookActionEnum, SnackbarSeverityEnum, PageLayoutEnum,BookingTabsDataEnum } from "./types";
 import { getLoginUserMutationApi,getCurrentUserApi } from "./service";
 
 const useCustomHook = () => {
@@ -80,6 +80,12 @@ const useCustomHook = () => {
         });
     };
 
+    const setActiveBookingTab = (tab: BookingTabsDataEnum) => {
+        setCustomHookState({
+            activeBookingTab: tab,
+        });
+    };
+
     return {
         ...state,
         setCustomHookState,
@@ -88,6 +94,7 @@ const useCustomHook = () => {
         setIsLoadingState,
         setSnackbarState,
         setPageLayout,
+        setActiveBookingTab,
     };
 };
 

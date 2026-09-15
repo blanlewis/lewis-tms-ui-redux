@@ -17,7 +17,8 @@ interface CustomHookState {
         message: string;
         severity: SnackbarSeverityEnum;
     };
-    pageLayout: PageLayoutEnum
+    pageLayout: PageLayoutEnum;
+    activeBookingTab: BookingTabsDataEnum;
 }
 
 enum PageLayoutEnum {
@@ -33,6 +34,11 @@ enum SnackbarSeverityEnum {
     INFO = "info",
 }
 
+enum BookingTabsDataEnum {
+    ALL = "all",
+    SUGGESTED = "suggested",
+}
+
 const customHookInitialState = {
     loginId: "",
     isLoading: false,
@@ -43,7 +49,8 @@ const customHookInitialState = {
         severity: SnackbarSeverityEnum.INFO
     },
     pageLayout: PageLayoutEnum.TWO_PANEL_LAYOUT,
+    activeBookingTab: BookingTabsDataEnum.ALL,
 };
 
 export type { CustomHookState, CustomHookAction,LoginResponse };
-export { customHookInitialState, CustomHookActionEnum, SnackbarSeverityEnum, PageLayoutEnum };
+export { customHookInitialState, CustomHookActionEnum, SnackbarSeverityEnum, PageLayoutEnum, BookingTabsDataEnum };
