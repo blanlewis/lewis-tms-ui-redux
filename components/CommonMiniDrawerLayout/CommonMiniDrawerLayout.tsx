@@ -180,10 +180,10 @@ interface AppTopBarProps {
   open: boolean;
   onOpen: () => void;
   toolbarAvatar: string;
-  setAnchorElForPopper: (anchorEl: HTMLElement | null) => void;
+  setPopper: (anchorElForPopper: HTMLElement | null, popperContent: React.ReactNode | null) => void;
 }
 
-const AppTopBar = ({ title, open, onOpen, toolbarAvatar, setAnchorElForPopper }: AppTopBarProps) => (
+const AppTopBar = ({ title, open, onOpen, toolbarAvatar, setPopper }: AppTopBarProps) => (
   <StyledAppBar position="fixed" open={open}>
     <Toolbar
       sx={{
@@ -207,7 +207,7 @@ const AppTopBar = ({ title, open, onOpen, toolbarAvatar, setAnchorElForPopper }:
         {title}
       </Typography>
       </Box>
-      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }} onClick={(event) => setAnchorElForPopper(event.currentTarget)}>
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }} onClick={(event) => setPopper(event.currentTarget, <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>Logout</Box>)}>
         <CustomAvatar toolbarAvatar={toolbarAvatar} />
       </Box>
       </Stack>
@@ -285,7 +285,7 @@ const CommonMiniDrawerLayout = ({
   toolbarAvatar,
 }: CommonMiniDrawerLayoutProps) => {
   const [open, setOpen] = React.useState(false);
-  const { setAnchorElForPopper } = useCustomHook();
+  const { setPopper } = useCustomHook();
 
   return (
     <Box
@@ -305,7 +305,7 @@ const CommonMiniDrawerLayout = ({
         open={open}
         onOpen={() => setOpen(true)}
         toolbarAvatar={toolbarAvatar}
-        setAnchorElForPopper={setAnchorElForPopper}
+        setPopper={setPopper}
       />
 
       <MiniDrawer

@@ -86,9 +86,12 @@ const useCustomHook = () => {
         });
     };
 
-    const setAnchorElForPopper = (anchorEl: HTMLElement | null) => {
+    const setPopper = (anchorElForPopper: HTMLElement | null, popperContent: React.ReactNode | null) => {
         setCustomHookState({
-            anchorElForPopper: anchorEl,
+            popper: {
+                anchorElForPopper,
+                popperContent,
+            },
         });
     };
 
@@ -101,7 +104,7 @@ const useCustomHook = () => {
         setSnackbarState,
         setPageLayout,
         setActiveBookingTab,
-        setAnchorElForPopper,
+        setPopper,
     };
 };
 

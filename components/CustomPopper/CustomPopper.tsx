@@ -6,16 +6,16 @@ import Popper from '@mui/material/Popper';
 import { useCustomHook } from '@/app/utils/hook';
 
 const CustomPopper = () => {
-  const { anchorElForPopper, setAnchorElForPopper } = useCustomHook();
+  const { popper, setPopper } = useCustomHook();
 
-  const open = Boolean(anchorElForPopper);
+  const open = Boolean(popper.anchorElForPopper);
   const id = open ? 'simple-popper' : undefined;
 
   return (
-      <Popper id={id} open={open} anchorEl={anchorElForPopper} sx={{ zIndex: 1202 }}>
-        <ClickAwayListener onClickAway={() => setAnchorElForPopper(null)}>
+      <Popper id={id} open={open} anchorEl={popper.anchorElForPopper} sx={{ zIndex: 1202 }}>
+        <ClickAwayListener onClickAway={() => setPopper(null, null)}>
           <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
-            The content of the Popper.
+            {popper.popperContent}
           </Box>
         </ClickAwayListener>
       </Popper>

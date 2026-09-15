@@ -19,7 +19,10 @@ interface CustomHookState {
     };
     pageLayout: PageLayoutEnum;
     activeBookingTab: BookingTabsDataEnum;
-    anchorElForPopper: HTMLElement | null;
+    popper: {
+        anchorElForPopper: HTMLElement | null;
+        popperContent: React.ReactNode | null;
+    };
 }
 
 enum PageLayoutEnum {
@@ -51,7 +54,10 @@ const customHookInitialState = {
     },
     pageLayout: PageLayoutEnum.TWO_PANEL_LAYOUT,
     activeBookingTab: BookingTabsDataEnum.ALL,
-    anchorElForPopper: null,
+    popper: {
+        anchorElForPopper: null,
+        popperContent: null,
+    },
 };
 
 export type { CustomHookState, CustomHookAction,LoginResponse };
