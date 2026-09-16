@@ -7,9 +7,11 @@ import {
   Checkbox,
   Stack,
   Typography,
+  Box,
 } from "@mui/material";
 import { BookingTypes } from "@/app/utils/types";
 import { useCustomHook } from "@/app/utils/hook";
+import CustomButton from "../CustomButton";
 
 type BookingCardWithCheckboxProps = {
   booking: BookingTypes;
@@ -45,6 +47,7 @@ const BookingCardWithCheckbox = ({
         }}
       >
         <CardContent sx={{ padding: "8px" }}>
+          <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
           <Stack
             sx={{
               flexDirection: "row",
@@ -93,6 +96,41 @@ const BookingCardWithCheckbox = ({
               </Typography>
             </Stack>
           </Stack>
+          <Box
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+            onMouseDown={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            <CustomButton
+              buttonText="AnalyseOnMap"
+              buttonTextOrIconColor="#FFFFFF"
+              icon={null}
+              isButtonDisabled={false}
+              onButtonClicked={(event) => {
+                event.stopPropagation();
+              }}
+              buttonMinWidth="100px"
+              buttonHeight="36px"
+              buttonFontSize="14px"
+              buttonBackgroundColor="#1976d2"
+              buttonBorderColor="#1976d2"
+              buttonBoxShadow="none"
+              buttonPadding="6px 16px"
+              buttonBorderRadius="4px"
+              buttonHoverTextOrIconColor="#FFFFFF"
+              buttonHoverBackgroundColor="#1565c0"
+              buttonHoverBoxShadow="none"
+              buttonHoverBorderColor="#1565c0"
+              buttonDisabledBackgroundColor="#E0E0E0"
+              buttonDisabledTextColor="#9E9E9E"
+              buttonDisabledBorderColor="#E0E0E0"
+              buttonDisabledBoxShadow="none"
+            />
+          </Box>
+          </Box>
         </CardContent>
       </CardActionArea>
     </Card>
