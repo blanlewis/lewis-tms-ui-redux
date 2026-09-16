@@ -130,6 +130,12 @@ const useCustomHook = () => {
         });
     };
 
+    const setAnalyseOnMapBookingId = (bookingId: number | null) => {
+        setCustomHookState({
+            analyseOnMapBookingId: bookingId,
+        });
+    };
+
     return {
         ...state,
         setCustomHookState,
@@ -142,6 +148,7 @@ const useCustomHook = () => {
         setActiveBookingTab,
         setPopper,
         setSelectedBookings,
+        setAnalyseOnMapBookingId,
     };
 };
 

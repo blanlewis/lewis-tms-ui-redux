@@ -24,6 +24,7 @@ interface CustomHookState {
         popperContent: React.ReactNode | null;
     };
     selectedBookings: number[];
+    analyseOnMapBookingId: number | null;
 }
 
 enum PageLayoutEnum {
@@ -70,6 +71,7 @@ const customHookInitialState = {
         popperContent: null,
     },
     selectedBookings: [],
+    analyseOnMapBookingId: null,
 };
 
 export type { CustomHookState, CustomHookAction,LoginResponse, BookingTypes };
