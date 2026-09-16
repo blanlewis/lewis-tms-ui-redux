@@ -1,4 +1,4 @@
-import { getLoginUserMutationQuery,getCurrentUserQuery  } from "./graphqlQueries";
+import { getLoginUserMutationQuery,getCurrentUserQuery, getLogoutMutationQuery } from "./graphqlQueries";
 import { LoginResponse } from "./types";
 
 const getLoginUserMutationApi = async (
@@ -74,4 +74,31 @@ const getCurrentUserApi = async (): Promise<string | null> => {
     }
 };
 
-export { getLoginUserMutationApi, getCurrentUserApi };
+const getLogoutMutationApi = async (): Promise<boolean> => {
+    const usersRequest = {
+        query: getLogoutMutationQuery(),
+    };
+    try {
+        const result = await fetch(
+            process.env.NEXT_PUBLIC_GRAPHQL_URL!,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify(usersRequest),
+            }
+        );
+        if (!result.ok) {
+            throw new Error(`HTTP Error: ${result.status}`);
+        }
+        const jsonResult = await result.json();
+        return jsonResult.data.logout;
+    } catch (error) {
+        console.error("Failed to logout:", error);
+        throw error;
+    }
+};
+
+export { getLoginUserMutationApi, getCurrentUserApi, getLogoutMutationApi };

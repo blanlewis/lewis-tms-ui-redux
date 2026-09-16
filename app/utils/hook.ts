@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { CustomHookContext } from "./context";
 import { CustomHookState, CustomHookActionEnum, SnackbarSeverityEnum, PageLayoutEnum,BookingTabsDataEnum } from "./types";
-import { getLoginUserMutationApi,getCurrentUserApi } from "./service";
+import { getLoginUserMutationApi,getCurrentUserApi, getLogoutMutationApi } from "./service";
 
 const useCustomHook = () => {
     const context = useContext(CustomHookContext);
@@ -58,6 +58,35 @@ const useCustomHook = () => {
         }
     };
 
+    const logoutState = async () => {
+        setIsLoadingState(true);
+        try {
+            const logoutResponse = await getLogoutMutationApi();
+            if (!logoutResponse) {
+                setCustomHookState({
+                    loginId: "",
+                });
+                setPopper(null, null);
+                setSnackbarState(
+                    true,
+                    "Logout successful",
+                    SnackbarSeverityEnum.SUCCESS
+                );
+            }
+            return logoutResponse;
+        } catch (error) {
+            console.error("Logout failed:", error);
+            setSnackbarState(
+                true,
+                "Logout failed. Please try again.",
+                SnackbarSeverityEnum.ERROR
+            );
+            throw error;
+        } finally {
+            setIsLoadingState(false);
+        }
+    };
+
     const setIsLoadingState = (isLoading: boolean) => {
         setCustomHookState({
             isLoading,
@@ -100,6 +129,7 @@ const useCustomHook = () => {
         setCustomHookState,
         loginState,
         getCurrentUser,
+        logoutState,
         setIsLoadingState,
         setSnackbarState,
         setPageLayout,

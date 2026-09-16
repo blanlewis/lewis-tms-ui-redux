@@ -27,6 +27,7 @@ import {
   Mail as MailIcon,
 } from "@mui/icons-material";
 import { useCustomHook } from '@/app/utils/hook';
+import ProfilePopup from "./ProfilePopup";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -207,7 +208,7 @@ const AppTopBar = ({ title, open, onOpen, toolbarAvatar, setPopper }: AppTopBarP
         {title}
       </Typography>
       </Box>
-      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }} onClick={(event) => setPopper(event.currentTarget, <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>Logout</Box>)}>
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }} onClick={(event) => setPopper(event.currentTarget, <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}><ProfilePopup toolbarAvatar={toolbarAvatar} /></Box>)}>
         <CustomAvatar toolbarAvatar={toolbarAvatar} />
       </Box>
       </Stack>

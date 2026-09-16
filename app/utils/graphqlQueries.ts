@@ -20,7 +20,16 @@ const getCurrentUserQuery = () => {
     `;
 };
 
+const getLogoutMutationQuery = () => {
+    return `
+        mutation {
+            logout
+        }
+    `;
+};
+
 export {
     getLoginUserMutationQuery,
     getCurrentUserQuery,
+    getLogoutMutationQuery,
 };
