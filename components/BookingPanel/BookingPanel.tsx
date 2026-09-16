@@ -290,6 +290,9 @@ const bookingTabsData = [
           flexDirection: "column",
           gap: 1,
           padding: "0px 8px",
+          height: "100%",
+          overflowY: "auto",
+          "& > *": { flexShrink: 0 },
         }}
       >
         {bookingData.map((booking) => (
@@ -313,6 +316,9 @@ const bookingTabsData = [
           flexDirection: "column",
           gap: 1,
           padding: "0px 8px",
+          height: "100%",
+          overflowY: "auto",
+          "& > *": { flexShrink: 0 },
         }}
       >
         {bookingData.map((booking) => (
@@ -329,7 +335,7 @@ const bookingTabsData = [
 const BookingPanel = () => {
   const { activeBookingTab, setActiveBookingTab } = useCustomHook();
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", height: "100%" }}>
       <CustomTabs tabsData={bookingTabsData} value={activeBookingTab} setValue={setActiveBookingTab as (value: string) => void}/>
     </Box>
   );
