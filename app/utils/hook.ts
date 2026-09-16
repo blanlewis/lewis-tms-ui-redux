@@ -130,9 +130,13 @@ const useCustomHook = () => {
         });
     };
 
-    const setAnalyseOnMapBookingId = (bookingId: number | null) => {
+    const setAnalyseOnMapBookingId = (bookingId: number | null, source: { lat: number | null; long: number | null }, destination: { lat: number | null; long: number | null }) => {
         setCustomHookState({
-            analyseOnMapBookingId: bookingId,
+            analyseOnMapBookingId: {
+                bookingId,
+                source,
+                destination,
+            },
         });
     };
 

@@ -24,7 +24,18 @@ interface CustomHookState {
         popperContent: React.ReactNode | null;
     };
     selectedBookings: number[];
-    analyseOnMapBookingId: number | null;
+
+    analyseOnMapBookingId: {
+        bookingId: number | null;
+        source: {
+            lat: number | null;
+            long: number | null;
+        };
+        destination: {
+            lat: number | null;
+            long: number | null;
+        };
+    };
 }
 
 enum PageLayoutEnum {
@@ -59,7 +70,7 @@ const customHookInitialState = {
     loginId: "",
     isLoading: false,
     isSessionChecked: false,
-    snackbar:{
+    snackbar: {
         open: false,
         message: "",
         severity: SnackbarSeverityEnum.INFO
@@ -71,7 +82,18 @@ const customHookInitialState = {
         popperContent: null,
     },
     selectedBookings: [],
-    analyseOnMapBookingId: null,
+
+    analyseOnMapBookingId: {
+        bookingId: null,
+        source: {
+            lat: null,
+            long: null,
+        },
+        destination: {
+            lat: null,
+            long: null,
+        },
+    },
 };
 
 export type { CustomHookState, CustomHookAction,LoginResponse, BookingTypes };
