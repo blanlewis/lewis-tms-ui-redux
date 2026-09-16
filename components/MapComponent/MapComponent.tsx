@@ -63,15 +63,15 @@ const MapComponent = () => {
     destinationLat,
     destinationLong,
   ]);
-  
+
   const sourceIcon = createMuiMarkerIcon(
-    <FlagCircleSharpIcon sx={{ color: "#1976d2", fontSize: 40 }} />,
-    40
+    <FlagCircleSharpIcon sx={{ color: "#1976d2", fontSize: 28 }} />,
+    28
   );
 
   const destinationIcon = createMuiMarkerIcon(
-    <LocalShippingSharpIcon sx={{ color: "#0D47A1", fontSize: 36 }} />,
-    40
+    <LocalShippingSharpIcon sx={{ color: "#0D47A1", fontSize: 24 }} />,
+    28
   );
 
   return (
