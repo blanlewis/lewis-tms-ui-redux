@@ -43,6 +43,16 @@ enum BookingTabsDataEnum {
     SUGGESTED = "suggested",
 }
 
+type BookingTypes = {
+  id: number;
+  source: string;
+  destination: string;
+  sourceLatitude: number;
+  sourceLongitude: number;
+  destinationLatitude: number;
+  destinationLongitude: number;
+};
+
 const customHookInitialState = {
     loginId: "",
     isLoading: false,
@@ -60,5 +70,5 @@ const customHookInitialState = {
     },
 };
 
-export type { CustomHookState, CustomHookAction,LoginResponse };
+export type { CustomHookState, CustomHookAction,LoginResponse, BookingTypes };
 export { customHookInitialState, CustomHookActionEnum, SnackbarSeverityEnum, PageLayoutEnum, BookingTabsDataEnum };
