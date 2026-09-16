@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import CustomTabs from "@/components/CustomTabs";
 import { useCustomHook } from "@/app/utils/hook";
 import { BookingTabsDataEnum } from "@/app/utils/types";
-import CustomCardWithCheckbox from "@/components/CustomCardWithCheckBox";
+import CustomCardWithCheckbox from "@/components/BookingCardWithCheckBox";
 
 const bookingData = [
   {
@@ -289,7 +289,7 @@ const bookingTabsData = [
           display: "flex",
           flexDirection: "column",
           gap: 1,
-          padding: "0px 8px",
+          padding: "8px",
           height: "100%",
           overflowY: "auto",
           "& > *": { flexShrink: 0 },
@@ -315,7 +315,7 @@ const bookingTabsData = [
           display: "flex",
           flexDirection: "column",
           gap: 1,
-          padding: "0px 8px",
+          padding: "8px",
           height: "100%",
           overflowY: "auto",
           "& > *": { flexShrink: 0 },

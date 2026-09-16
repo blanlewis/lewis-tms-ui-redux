@@ -124,6 +124,12 @@ const useCustomHook = () => {
         });
     };
 
+    const setSelectedBookings = (selectedBookings: number[]) => {
+        setCustomHookState({
+            selectedBookings,
+        });
+    };
+
     return {
         ...state,
         setCustomHookState,
@@ -135,6 +141,7 @@ const useCustomHook = () => {
         setPageLayout,
         setActiveBookingTab,
         setPopper,
+        setSelectedBookings,
     };
 };
 

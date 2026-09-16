@@ -23,6 +23,7 @@ interface CustomHookState {
         anchorElForPopper: HTMLElement | null;
         popperContent: React.ReactNode | null;
     };
+    selectedBookings: number[];
 }
 
 enum PageLayoutEnum {
@@ -68,6 +69,7 @@ const customHookInitialState = {
         anchorElForPopper: null,
         popperContent: null,
     },
+    selectedBookings: [],
 };
 
 export type { CustomHookState, CustomHookAction,LoginResponse, BookingTypes };
