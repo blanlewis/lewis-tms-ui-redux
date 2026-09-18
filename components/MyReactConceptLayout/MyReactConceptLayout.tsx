@@ -1,5 +1,5 @@
-"use client";
-import { Box } from "@mui/material";
+import { Box } from '@mui/material';
+import DossierPanel from '@/components/DossierPanel';
 import ReflexDragger from "@/components/ReflexDragger";
 import { useCustomHook } from "@/app/utils/hook";
 import { PageLayoutEnum } from "@/app/utils/types";
@@ -97,7 +97,7 @@ const ThreePanelLayout = () => {
                   justifyContent: "center",
                 }}
               >
-                Left Bottom
+                <DossierPanel />
               </Box>
             }
             minimumLeftPaneWidth={50}
@@ -196,7 +196,7 @@ const ClassicLayout = () => {
               justifyContent: "center",
             }}
           >
-            Bottom Side
+           <DossierPanel />
           </Box>
         }
         minimumLeftPaneWidth={100}

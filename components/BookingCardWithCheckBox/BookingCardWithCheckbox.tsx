@@ -58,6 +58,7 @@ const BookingCardWithCheckbox = ({
   return (
     <Card>
       <CardActionArea
+        component="div"
         onClick={handleCardClick}
         data-active={selected ? "" : undefined}
         sx={{
