@@ -89,12 +89,7 @@ const ThreePanelLayout = () => {
               <Box
                 sx={{
                   width: "100%",
-                  height: "100%",
-                  boxSizing: "border-box",
                   border: "1px solid green",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                 }}
               >
                 <DossierPanel />
@@ -188,12 +183,7 @@ const ClassicLayout = () => {
           <Box
             sx={{
               width: "100%",
-              height: "100%",
-              boxSizing: "border-box",
               border: "1px solid green",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
             }}
           >
            <DossierPanel />
