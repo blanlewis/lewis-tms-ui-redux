@@ -34,7 +34,6 @@ const TwoPanelLayout = ({
         >
             <ReflexDragger
                 reflexContainerOrientation="vertical"
-
                 leftpaneComponent={
                     <Box
                         sx={{
@@ -53,7 +52,6 @@ const TwoPanelLayout = ({
                         )}
                     </Box>
                 }
-
                 rightpaneComponent={
                     <Box
                         sx={{
@@ -75,7 +73,6 @@ const TwoPanelLayout = ({
                         )}
                     </Box>
                 }
-
                 minimumLeftPaneWidth={100}
                 minimumRightPaneWidth={100}
                 splitterWidth={4}
@@ -107,11 +104,9 @@ const ThreePanelLayout = ({
         >
             <ReflexDragger
                 reflexContainerOrientation="vertical"
-
                 leftpaneComponent={
                     <ReflexDragger
                         reflexContainerOrientation="horizontal"
-
                         leftpaneComponent={
                             <Box
                                 sx={{
@@ -130,7 +125,6 @@ const ThreePanelLayout = ({
                                 )}
                             </Box>
                         }
-
                         rightpaneComponent={
                             <Box
                                 sx={{
@@ -140,16 +134,15 @@ const ThreePanelLayout = ({
                                     border: "1px solid green",
                                 }}
                             >
-                                {pageLayoutPane2 === PageLayoutPaneEnum.BOOKING_PANE ? (
+                                {pageLayoutPane3 === PageLayoutPaneEnum.BOOKING_PANE ? (
                                     <BookingPanel />
-                                ) : pageLayoutPane2 === PageLayoutPaneEnum.MAP_PANE ? (
+                                ) : pageLayoutPane3 === PageLayoutPaneEnum.MAP_PANE ? (
                                     <MapComponent />
                                 ) : (
                                     <DossierPanel />
                                 )}
                             </Box>
                         }
-
                         minimumLeftPaneWidth={50}
                         minimumRightPaneWidth={50}
                         splitterWidth={4}
@@ -158,7 +151,6 @@ const ThreePanelLayout = ({
                         isDraggerIconRequired={false}
                     />
                 }
-
                 rightpaneComponent={
                     <Box
                         sx={{
@@ -171,16 +163,15 @@ const ThreePanelLayout = ({
                             justifyContent: "center",
                         }}
                     >
-                        {pageLayoutPane3 === PageLayoutPaneEnum.BOOKING_PANE ? (
+                        {pageLayoutPane2 === PageLayoutPaneEnum.BOOKING_PANE ? (
                             <BookingPanel />
-                        ) : pageLayoutPane3 === PageLayoutPaneEnum.MAP_PANE ? (
+                        ) : pageLayoutPane2 === PageLayoutPaneEnum.MAP_PANE ? (
                             <MapComponent />
                         ) : (
                             <DossierPanel />
                         )}
                     </Box>
                 }
-
                 minimumLeftPaneWidth={100}
                 minimumRightPaneWidth={100}
                 splitterWidth={4}
@@ -212,11 +203,9 @@ const ClassicLayout = ({
         >
             <ReflexDragger
                 reflexContainerOrientation="horizontal"
-
                 leftpaneComponent={
                     <ReflexDragger
                         reflexContainerOrientation="vertical"
-
                         leftpaneComponent={
                             <Box
                                 sx={{
@@ -235,7 +224,6 @@ const ClassicLayout = ({
                                 )}
                             </Box>
                         }
-
                         rightpaneComponent={
                             <Box
                                 sx={{
@@ -248,16 +236,15 @@ const ClassicLayout = ({
                                     justifyContent: "center",
                                 }}
                             >
-                                {pageLayoutPane3 === PageLayoutPaneEnum.BOOKING_PANE ? (
+                                {pageLayoutPane2 === PageLayoutPaneEnum.BOOKING_PANE ? (
                                     <BookingPanel />
-                                ) : pageLayoutPane3 === PageLayoutPaneEnum.MAP_PANE ? (
+                                ) : pageLayoutPane2 === PageLayoutPaneEnum.MAP_PANE ? (
                                     <MapComponent />
                                 ) : (
                                     <DossierPanel />
                                 )}
                             </Box>
                         }
-
                         minimumLeftPaneWidth={50}
                         minimumRightPaneWidth={50}
                         splitterWidth={4}
@@ -266,7 +253,6 @@ const ClassicLayout = ({
                         isDraggerIconRequired={false}
                     />
                 }
-
                 rightpaneComponent={
                     <Box
                         sx={{
@@ -276,16 +262,15 @@ const ClassicLayout = ({
                             border: "1px solid green",
                         }}
                     >
-                        {pageLayoutPane2 === PageLayoutPaneEnum.BOOKING_PANE ? (
+                        {pageLayoutPane3 === PageLayoutPaneEnum.BOOKING_PANE ? (
                             <BookingPanel />
-                        ) : pageLayoutPane2 === PageLayoutPaneEnum.MAP_PANE ? (
+                        ) : pageLayoutPane3 === PageLayoutPaneEnum.MAP_PANE ? (
                             <MapComponent />
                         ) : (
                             <DossierPanel />
                         )}
                     </Box>
                 }
-
                 minimumLeftPaneWidth={100}
                 minimumRightPaneWidth={100}
                 splitterWidth={4}
