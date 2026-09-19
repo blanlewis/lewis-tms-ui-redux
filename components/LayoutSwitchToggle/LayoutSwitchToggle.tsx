@@ -30,14 +30,16 @@ const LayoutSwitchToggle = () => {
   const handleToggleChange = (value: string | null) => {
     if (value !== null) {
       const newLayout = value as PageLayoutEnum;
-      setPageLayout(newLayout);
+      setPageLayout({
+        layout: newLayout,
+      });
     }
   };
 
   return (
     <CustomToggleButton
       toggleData={toggleData}
-      selectedToggle={pageLayout}
+      selectedToggle={pageLayout.layout}
       setSelectedToggle={handleToggleChange}
       orientation="vertical"
     />
