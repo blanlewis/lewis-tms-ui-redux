@@ -39,14 +39,14 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
           customNode: <LayoutPaneRearrange />,
           onClick: (event) => {
             const anchorEl = event.currentTarget;
-
             setPopper(
               anchorEl,
               <Box sx={{ p: 2 }}>
                 <Typography>
                   Blan
                 </Typography>
-              </Box>
+              </Box>,
+              "right"
             );
           },
         },

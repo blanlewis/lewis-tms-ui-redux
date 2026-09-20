@@ -283,10 +283,10 @@ interface AppTopBarProps {
   open: boolean;
   onOpen: () => void;
   toolbarAvatar: string;
-
   setPopper: (
     anchorElForPopper: HTMLElement | null,
-    popperContent: React.ReactNode | null
+    popperContent: React.ReactNode | null,
+    popperPlacement: "top" | "bottom" | "left" | "right"
   ) => void;
 }
 
@@ -364,7 +364,8 @@ const AppTopBar = ({
                 event.currentTarget,
                 <ProfilePopup
                   toolbarAvatar={toolbarAvatar}
-                />
+                />,
+                "bottom"
               );
             }}
           >

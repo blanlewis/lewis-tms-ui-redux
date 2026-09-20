@@ -12,8 +12,8 @@ const CustomPopper = () => {
   const id = open ? 'simple-popper' : undefined;
 
   return (
-      <Popper id={id} open={open} anchorEl={popper.anchorElForPopper} sx={{ zIndex: 1202 }}>
-        <ClickAwayListener onClickAway={() => setPopper(null, null)}>
+      <Popper id={id} open={open} anchorEl={popper.anchorElForPopper} placement={popper.popperPlacement} sx={{ zIndex: 1202 }}>
+        <ClickAwayListener onClickAway={() => setPopper(null, null, "bottom")}>
           <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
             {popper.popperContent}
           </Box>

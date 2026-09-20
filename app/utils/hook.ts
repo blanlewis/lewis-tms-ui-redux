@@ -66,7 +66,7 @@ const useCustomHook = () => {
                 setCustomHookState({
                     loginId: "",
                 });
-                setPopper(null, null);
+                setPopper(null, null, "bottom");
                 setSnackbarState(
                     true,
                     "Logout successful",
@@ -120,11 +120,12 @@ const useCustomHook = () => {
         });
     };
 
-    const setPopper = (anchorElForPopper: HTMLElement | null, popperContent: React.ReactNode | null) => {
+    const setPopper = (anchorElForPopper: HTMLElement | null, popperContent: React.ReactNode | null, popperPlacement: "top" | "bottom" | "left" | "right") => {
         setCustomHookState({
             popper: {
                 anchorElForPopper,
                 popperContent,
+                popperPlacement,
             },
         });
     };

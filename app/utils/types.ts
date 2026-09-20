@@ -31,6 +31,7 @@ interface CustomHookState {
     popper: {
         anchorElForPopper: HTMLElement | null;
         popperContent: React.ReactNode | null;
+        popperPlacement: "top" | "bottom" | "left" | "right";
     };
 
     selectedBookings: number[];
@@ -115,6 +116,7 @@ const customHookInitialState: CustomHookState = {
     popper: {
         anchorElForPopper: null,
         popperContent: null,
+        popperPlacement: "bottom",
     },
 
     selectedBookings: [],
