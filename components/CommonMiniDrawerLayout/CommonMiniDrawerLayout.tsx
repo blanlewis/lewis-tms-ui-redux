@@ -26,7 +26,7 @@ import {
   MoveToInbox as InboxIcon,
   Mail as MailIcon,
 } from "@mui/icons-material";
-import { useCustomHook } from '@/app/utils/hook';
+import { useCustomHook } from "@/app/utils/hook";
 import ProfilePopup from "./ProfilePopup";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -141,31 +141,101 @@ const NavList = ({ items, open }: NavListProps) => (
     {items.map((item, index) => {
       if (item.customNode) {
         return (
-          <ListItem key={item.label ?? `custom-item-${item.route ?? String(index)}`} sx={{ display: "flex", alignItems: "center", justifyContent: "center", px: open ? 2 : 1, py: 1 }}>
-            {item.customNode}
+          <ListItem
+            key={
+              item.label ??
+              `custom-item-${item.route ?? String(index)}`
+            }
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: open ? "flex-start" : "center",
+              width: "100%",
+              boxSizing: "border-box",
+              px: open ? 2 : 0,
+              py: 1,
+              gap: open ? 1 : 0,
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              {item.customNode}
+            </Box>
+
+            <ListItemText
+              primary={item.label}
+              sx={{
+                opacity: open ? 1 : 0,
+                whiteSpace: "nowrap",
+                flex: open ? 1 : 0,
+              }}
+            />
           </ListItem>
         );
       }
+
       return (
-        <ListItem key={item.label} disablePadding sx={{ display: "block" }}>
+        <ListItem
+          key={item.label}
+          disablePadding
+          sx={{
+            display: "block",
+          }}
+        >
           <ListItemButton
-            {...(item.route ? { component: Link, href: item.route } : {})}
+            {...(item.route
+              ? {
+                  component: Link,
+                  href: item.route,
+                }
+              : {})}
             sx={[
-              { minHeight: 48, px: 2.5 },
-              open ? { justifyContent: "initial" } : { justifyContent: "center" },
+              {
+                minHeight: 48,
+                px: 2.5,
+              },
+              open
+                ? {
+                    justifyContent: "initial",
+                  }
+                : {
+                    justifyContent: "center",
+                  },
             ]}
           >
             <ListItemIcon
               sx={[
-                { minWidth: 0, justifyContent: "center" },
-                open ? { mr: 3 } : { mr: "auto" },
+                {
+                  minWidth: 0,
+                  justifyContent: "center",
+                },
+                open
+                  ? {
+                      mr: 3,
+                    }
+                  : {
+                      mr: "auto",
+                    },
               ]}
             >
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              {index % 2 === 0 ? (
+                <InboxIcon />
+              ) : (
+                <MailIcon />
+              )}
             </ListItemIcon>
+
             <ListItemText
               primary={item.label}
-              sx={{ opacity: open ? 1 : 0 }}
+              sx={{
+                opacity: open ? 1 : 0,
+              }}
             />
           </ListItemButton>
         </ListItem>
@@ -181,10 +251,19 @@ interface AppTopBarProps {
   open: boolean;
   onOpen: () => void;
   toolbarAvatar: string;
-  setPopper: (anchorElForPopper: HTMLElement | null, popperContent: React.ReactNode | null) => void;
+  setPopper: (
+    anchorElForPopper: HTMLElement | null,
+    popperContent: React.ReactNode | null
+  ) => void;
 }
 
-const AppTopBar = ({ title, open, onOpen, toolbarAvatar, setPopper }: AppTopBarProps) => (
+const AppTopBar = ({
+  title,
+  open,
+  onOpen,
+  toolbarAvatar,
+  setPopper,
+}: AppTopBarProps) => (
   <StyledAppBar position="fixed" open={open}>
     <Toolbar
       sx={{
@@ -193,24 +272,72 @@ const AppTopBar = ({ title, open, onOpen, toolbarAvatar, setPopper }: AppTopBarP
         },
       }}
     >
-      <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center", justifyContent: "space-between",width:"100%" }}>
-      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-      <IconButton
-        color="inherit"
-        aria-label="open drawer"
-        onClick={onOpen}
-        edge="start"
-        sx={[{ marginRight: 5 }, open && { display: "none" }]}
+      <Stack
+        sx={{
+          flexDirection: "row",
+          gap: 2,
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
       >
-        <MenuIcon />
-      </IconButton>
-      <Typography variant="h6" noWrap component="div">
-        {title}
-      </Typography>
-      </Box>
-      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }} onClick={(event) => setPopper(event.currentTarget, <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}><ProfilePopup toolbarAvatar={toolbarAvatar} /></Box>)}>
-        <CustomAvatar toolbarAvatar={toolbarAvatar} />
-      </Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={onOpen}
+            edge="start"
+            sx={[
+              {
+                marginRight: 5,
+              },
+              open && {
+                display: "none",
+              },
+            ]}
+          >
+            <MenuIcon />
+          </IconButton>
+
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+          >
+            {title}
+          </Typography>
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+          }}
+          onClick={(event) =>
+            setPopper(
+              event.currentTarget,
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <ProfilePopup toolbarAvatar={toolbarAvatar} />
+              </Box>
+            )
+          }
+        >
+          <CustomAvatar toolbarAvatar={toolbarAvatar} />
+        </Box>
       </Stack>
     </Toolbar>
   </StyledAppBar>
@@ -225,20 +352,39 @@ interface MiniDrawerProps {
   secondaryItems: NavItem[];
 }
 
-const MiniDrawer = ({ open, onClose, primaryItems, secondaryItems }: MiniDrawerProps) => {
+const MiniDrawer = ({
+  open,
+  onClose,
+  primaryItems,
+  secondaryItems,
+}: MiniDrawerProps) => {
   const theme = useTheme();
 
   return (
     <StyledDrawer variant="permanent" open={open}>
       <DrawerHeader>
         <IconButton onClick={onClose}>
-          {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          {theme.direction === "rtl" ? (
+            <ChevronRightIcon />
+          ) : (
+            <ChevronLeftIcon />
+          )}
         </IconButton>
       </DrawerHeader>
+
       <Divider />
-      <NavList items={primaryItems} open={open} />
+
+      <NavList
+        items={primaryItems}
+        open={open}
+      />
+
       <Divider />
-      <NavList items={secondaryItems} open={open} />
+
+      <NavList
+        items={secondaryItems}
+        open={open}
+      />
     </StyledDrawer>
   );
 };
@@ -250,14 +396,21 @@ interface AppBodyProps {
   drawerOpen: boolean;
 }
 
-const AppBody = ({ children, drawerOpen }: AppBodyProps) => (
+const AppBody = ({
+  children,
+  drawerOpen,
+}: AppBodyProps) => (
   <Box
     component="main"
     sx={{
       flexGrow: 1,
       p: 0,
       mt: `${TOOLBAR_HEIGHT}px`,
-      width: `calc(100% - ${drawerOpen ? DRAWER_WIDTH : DRAWER_COLLAPSED_WIDTH}px)`,
+      width: `calc(100% - ${
+        drawerOpen
+          ? DRAWER_WIDTH
+          : DRAWER_COLLAPSED_WIDTH
+      }px)`,
       height: `calc(100vh - ${TOOLBAR_HEIGHT}px)`,
       maxHeight: `calc(100vh - ${TOOLBAR_HEIGHT}px)`,
       overflow: "hidden",
