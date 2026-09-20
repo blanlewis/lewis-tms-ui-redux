@@ -5,10 +5,12 @@ import CustomTabs from "@/components/CustomTabs";
 import { useState } from "react";
 import CustomButton from "@/components/CustomButton";
 import { useCustomHook } from "@/app/utils/hook";
+import { useRef } from "react";
 import { PageLayoutEnum } from "@/app/utils/types";
 
 import ViewAgendaIcon from "@mui/icons-material/ViewAgenda";
 import AutoAwesomeMosaicIcon from "@mui/icons-material/AutoAwesomeMosaic";
+import CustomDragAndDrop from "@/components/CustomDragAndDrop";
 
 const LayoutSwitchAndPaneReArrangement = () => {
   const [
@@ -17,6 +19,7 @@ const LayoutSwitchAndPaneReArrangement = () => {
   ] = useState("layout-switch");
 
   const { pageLayout, setPageLayout } = useCustomHook();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const selectedColor = "#2970FF";
   const defaultColor = "#344054";
@@ -159,10 +162,12 @@ const LayoutSwitchAndPaneReArrangement = () => {
     },
 
     {
-      label: "Pane Re-Arrangement",
-      value: "pane-re-arrangement",
-      content: (
+    label: "Pane Re-Arrangement",
+    value: "pane-re-arrangement",
+
+    content: (
         <Box
+        ref={containerRef}
         sx={{
             width: "100%",
             height: "100%",
@@ -170,79 +175,29 @@ const LayoutSwitchAndPaneReArrangement = () => {
             flexDirection: "column",
             gap: "8px",
             padding: "8px",
+            overflow: "hidden",
         }}
         >
-        {/* Dossier */}
-        <Box
-            sx={{
-            minWidth: "100px",
-            height: "36px",
-            padding: "6px 12px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: "14px",
-            fontWeight: 600,
-            color: defaultColor,
-            borderRadius: "6px",
-            lineHeight: "normal",
-            backgroundColor: "#FFFFFF",
-            border: "1px solid #D0D5DD",
-            boxShadow: "none",
-            boxSizing: "border-box",
-            }}
-        >
-            Dossier
+            <CustomDragAndDrop
+                items={[
+                {
+                    id: "dossier",
+                    label: "Dossier",
+                },
+                {
+                    id: "map",
+                    label: "Map",
+                },
+                {
+                    id: "booking",
+                    label: "Booking",
+                },
+                ]}
+                containerRef={containerRef}
+            />
         </Box>
-
-        {/* Map */}
-        <Box
-            sx={{
-            minWidth: "100px",
-            height: "36px",
-            padding: "6px 12px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: "14px",
-            fontWeight: 600,
-            color: defaultColor,
-            borderRadius: "6px",
-            lineHeight: "normal",
-            backgroundColor: "#FFFFFF",
-            border: "1px solid #D0D5DD",
-            boxShadow: "none",
-            boxSizing: "border-box",
-            }}
-        >
-            Map
-        </Box>
-
-        {/* Booking */}
-        <Box
-            sx={{
-            minWidth: "100px",
-            height: "36px",
-            padding: "6px 12px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: "14px",
-            fontWeight: 600,
-            color: defaultColor,
-            borderRadius: "6px",
-            lineHeight: "normal",
-            backgroundColor: "#FFFFFF",
-            border: "1px solid #D0D5DD",
-            boxShadow: "none",
-            boxSizing: "border-box",
-            }}
-        >
-            Booking
-        </Box>
-        </Box>
-      ),
-    },
+    ),
+    }
   ];
 
   return (
