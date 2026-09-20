@@ -1,7 +1,9 @@
+"use client";
+
 import * as React from "react";
 import Link from "next/link";
-import CustomAvatar from "@/components/CustomAvatar";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
+
 import {
   Box,
   Drawer as MuiDrawer,
@@ -18,7 +20,10 @@ import {
   ListItemText,
   Stack,
 } from "@mui/material";
+
 import type { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import type { ListItemButtonProps } from "@mui/material/ListItemButton";
+
 import {
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
@@ -26,31 +31,42 @@ import {
   MoveToInbox as InboxIcon,
   Mail as MailIcon,
 } from "@mui/icons-material";
+
+import CustomAvatar from "@/components/CustomAvatar";
 import { useCustomHook } from "@/app/utils/hook";
 import ProfilePopup from "./ProfilePopup";
 
-// ─── Constants ────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// Constants
+// ─────────────────────────────────────────────────────────────────────────────
 
 const DRAWER_WIDTH = 240;
 const DRAWER_COLLAPSED_WIDTH = 65;
 const TOOLBAR_HEIGHT = 48;
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// Types
+// ─────────────────────────────────────────────────────────────────────────────
 
 export interface NavItem {
   label?: string;
   route?: string;
   customNode?: React.ReactNode;
+  onClick?: ListItemButtonProps["onClick"];
 }
 
-// ─── Styled primitives ────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// Drawer styles
+// ─────────────────────────────────────────────────────────────────────────────
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: DRAWER_WIDTH,
+
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
+
   overflowX: "hidden",
 });
 
@@ -59,23 +75,37 @@ const closedMixin = (theme: Theme): CSSObject => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+
   overflowX: "hidden",
+
   width: `calc(${theme.spacing(7)} + 1px)`,
+
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Drawer Header
+// ─────────────────────────────────────────────────────────────────────────────
+
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "flex-end",
+
   padding: theme.spacing(0, 1),
+
   ...theme.mixins.toolbar,
+
   "@media (min-width: 600px)": {
     minHeight: `${TOOLBAR_HEIGHT}px`,
   },
 }));
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AppBar
+// ─────────────────────────────────────────────────────────────────────────────
 
 interface StyledAppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -85,16 +115,21 @@ const StyledAppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })<StyledAppBarProps>(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
+
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+
   variants: [
     {
       props: ({ open }) => open,
+
       style: {
         marginLeft: DRAWER_WIDTH,
+
         width: `calc(100% - ${DRAWER_WIDTH}px)`,
+
         transition: theme.transitions.create(["width", "margin"], {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.enteringScreen,
@@ -104,153 +139,151 @@ const StyledAppBar = styled(MuiAppBar, {
   ],
 }));
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Drawer
+// ─────────────────────────────────────────────────────────────────────────────
+
 const StyledDrawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme }) => ({
   width: DRAWER_WIDTH,
+
   flexShrink: 0,
+
   whiteSpace: "nowrap",
+
   boxSizing: "border-box",
+
   variants: [
     {
       props: ({ open }) => open,
+
       style: {
         ...openedMixin(theme),
-        "& .MuiDrawer-paper": openedMixin(theme),
+
+        "& .MuiDrawer-paper": {
+          ...openedMixin(theme),
+        },
       },
     },
+
     {
       props: ({ open }) => !open,
+
       style: {
         ...closedMixin(theme),
-        "& .MuiDrawer-paper": closedMixin(theme),
+
+        "& .MuiDrawer-paper": {
+          ...closedMixin(theme),
+        },
       },
     },
   ],
 }));
 
-// ─── NavList ──────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// NavList
+// ─────────────────────────────────────────────────────────────────────────────
 
 interface NavListProps {
   items: NavItem[];
   open: boolean;
 }
 
-const NavList = ({ items, open }: NavListProps) => (
-  <List sx={{ p: 0 }}>
-    {items.map((item, index) => {
-      if (item.customNode) {
+const NavList = ({
+  items,
+  open,
+}: NavListProps) => {
+  return (
+    <List sx={{ p: 0 }}>
+      {items.map((item, index) => {
         return (
           <ListItem
             key={
               item.label ??
               `custom-item-${item.route ?? String(index)}`
             }
+            disablePadding
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: open ? "flex-start" : "center",
-              width: "100%",
-              boxSizing: "border-box",
-              px: open ? 2 : 0,
-              py: 1,
-              gap: open ? 1 : 0,
+              display: "block",
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-              }}
-            >
-              {item.customNode}
-            </Box>
-
-            <ListItemText
-              primary={item.label}
-              sx={{
-                opacity: open ? 1 : 0,
-                whiteSpace: "nowrap",
-                flex: open ? 1 : 0,
-              }}
-            />
-          </ListItem>
-        );
-      }
-
-      return (
-        <ListItem
-          key={item.label}
-          disablePadding
-          sx={{
-            display: "block",
-          }}
-        >
-          <ListItemButton
-            {...(item.route
-              ? {
-                  component: Link,
-                  href: item.route,
-                }
-              : {})}
-            sx={[
-              {
-                minHeight: 48,
-                px: 2.5,
-              },
-              open
+            <ListItemButton
+              {...(item.route
                 ? {
-                    justifyContent: "initial",
+                    component: Link,
+                    href: item.route,
                   }
-                : {
-                    justifyContent: "center",
-                  },
-            ]}
-          >
-            <ListItemIcon
+                : {})}
+              onClick={item.onClick}
               sx={[
                 {
-                  minWidth: 0,
-                  justifyContent: "center",
+                  minHeight: 48,
+                  px: 2.5,
                 },
+
                 open
                   ? {
-                      mr: 3,
+                      justifyContent: "initial",
                     }
                   : {
-                      mr: "auto",
+                      justifyContent: "center",
                     },
               ]}
             >
-              {index % 2 === 0 ? (
-                <InboxIcon />
-              ) : (
-                <MailIcon />
-              )}
-            </ListItemIcon>
+              <ListItemIcon
+                sx={[
+                  {
+                    minWidth: 0,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    display: "flex",
+                  },
 
-            <ListItemText
-              primary={item.label}
-              sx={{
-                opacity: open ? 1 : 0,
-              }}
-            />
-          </ListItemButton>
-        </ListItem>
-      );
-    })}
-  </List>
-);
+                  open
+                    ? {
+                        mr: 3,
+                      }
+                    : {
+                        mr: "auto",
+                        ml: "auto",
+                      },
+                ]}
+              >
+                {item.customNode ? (
+                  item.customNode
+                ) : index % 2 === 0 ? (
+                  <InboxIcon />
+                ) : (
+                  <MailIcon />
+                )}
+              </ListItemIcon>
 
-// ─── AppTopBar ────────────────────────────────────────────────────────────────
+              <ListItemText
+                primary={item.label}
+                sx={{
+                  opacity: open ? 1 : 0,
+                  whiteSpace: "nowrap",
+                }}
+              />
+            </ListItemButton>
+          </ListItem>
+        );
+      })}
+    </List>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// App Top Bar
+// ─────────────────────────────────────────────────────────────────────────────
 
 interface AppTopBarProps {
   title: string;
   open: boolean;
   onOpen: () => void;
   toolbarAvatar: string;
+
   setPopper: (
     anchorElForPopper: HTMLElement | null,
     popperContent: React.ReactNode | null
@@ -263,87 +296,91 @@ const AppTopBar = ({
   onOpen,
   toolbarAvatar,
   setPopper,
-}: AppTopBarProps) => (
-  <StyledAppBar position="fixed" open={open}>
-    <Toolbar
-      sx={{
-        "@media (min-width:0px)": {
-          minHeight: `${TOOLBAR_HEIGHT}px`,
-        },
-      }}
+}: AppTopBarProps) => {
+  return (
+    <StyledAppBar
+      position="fixed"
+      open={open}
     >
-      <Stack
+      <Toolbar
         sx={{
-          flexDirection: "row",
-          gap: 2,
-          alignItems: "center",
-          justifyContent: "space-between",
-          width: "100%",
+          "@media (min-width:0px)": {
+            minHeight: `${TOOLBAR_HEIGHT}px`,
+          },
         }}
       >
-        <Box
+        <Stack
           sx={{
-            display: "flex",
-            alignItems: "center",
+            flexDirection: "row",
             gap: 2,
-          }}
-        >
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={onOpen}
-            edge="start"
-            sx={[
-              {
-                marginRight: 5,
-              },
-              open && {
-                display: "none",
-              },
-            ]}
-          >
-            <MenuIcon />
-          </IconButton>
-
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-          >
-            {title}
-          </Typography>
-        </Box>
-
-        <Box
-          sx={{
-            display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
+            justifyContent: "space-between",
+            width: "100%",
           }}
-          onClick={(event) =>
-            setPopper(
-              event.currentTarget,
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <ProfilePopup toolbarAvatar={toolbarAvatar} />
-              </Box>
-            )
-          }
         >
-          <CustomAvatar toolbarAvatar={toolbarAvatar} />
-        </Box>
-      </Stack>
-    </Toolbar>
-  </StyledAppBar>
-);
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={onOpen}
+              edge="start"
+              sx={[
+                {
+                  marginRight: 5,
+                },
 
-// ─── MiniDrawer ───────────────────────────────────────────────────────────────
+                open && {
+                  display: "none",
+                },
+              ]}
+            >
+              <MenuIcon />
+            </IconButton>
+
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+            >
+              {title}
+            </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+            }}
+            onClick={(event) => {
+              setPopper(
+                event.currentTarget,
+                <ProfilePopup
+                  toolbarAvatar={toolbarAvatar}
+                />
+              );
+            }}
+          >
+            <CustomAvatar
+              toolbarAvatar={toolbarAvatar}
+            />
+          </Box>
+        </Stack>
+      </Toolbar>
+    </StyledAppBar>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Mini Drawer
+// ─────────────────────────────────────────────────────────────────────────────
 
 interface MiniDrawerProps {
   open: boolean;
@@ -361,7 +398,10 @@ const MiniDrawer = ({
   const theme = useTheme();
 
   return (
-    <StyledDrawer variant="permanent" open={open}>
+    <StyledDrawer
+      variant="permanent"
+      open={open}
+    >
       <DrawerHeader>
         <IconButton onClick={onClose}>
           {theme.direction === "rtl" ? (
@@ -389,7 +429,9 @@ const MiniDrawer = ({
   );
 };
 
-// ─── AppBody ──────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// App Body
+// ─────────────────────────────────────────────────────────────────────────────
 
 interface AppBodyProps {
   children: React.ReactNode;
@@ -399,29 +441,40 @@ interface AppBodyProps {
 const AppBody = ({
   children,
   drawerOpen,
-}: AppBodyProps) => (
-  <Box
-    component="main"
-    sx={{
-      flexGrow: 1,
-      p: 0,
-      mt: `${TOOLBAR_HEIGHT}px`,
-      width: `calc(100% - ${
-        drawerOpen
-          ? DRAWER_WIDTH
-          : DRAWER_COLLAPSED_WIDTH
-      }px)`,
-      height: `calc(100vh - ${TOOLBAR_HEIGHT}px)`,
-      maxHeight: `calc(100vh - ${TOOLBAR_HEIGHT}px)`,
-      overflow: "hidden",
-      overscrollBehavior: "none",
-    }}
-  >
-    {children}
-  </Box>
-);
+}: AppBodyProps) => {
+  return (
+    <Box
+      component="main"
+      sx={{
+        flexGrow: 1,
 
-// ─── CommonMiniDrawerLayout ───────────────────────────────────────────────────
+        p: 0,
+
+        mt: `${TOOLBAR_HEIGHT}px`,
+
+        width: `calc(100% - ${
+          drawerOpen
+            ? DRAWER_WIDTH
+            : DRAWER_COLLAPSED_WIDTH
+        }px)`,
+
+        height: `calc(100vh - ${TOOLBAR_HEIGHT}px)`,
+
+        maxHeight: `calc(100vh - ${TOOLBAR_HEIGHT}px)`,
+
+        overflow: "hidden",
+
+        overscrollBehavior: "none",
+      }}
+    >
+      {children}
+    </Box>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CommonMiniDrawerLayout
+// ─────────────────────────────────────────────────────────────────────────────
 
 interface CommonMiniDrawerLayoutProps {
   appHeaderTitle: string;
@@ -439,16 +492,24 @@ const CommonMiniDrawerLayout = ({
   toolbarAvatar,
 }: CommonMiniDrawerLayoutProps) => {
   const [open, setOpen] = React.useState(false);
-  const { setPopper } = useCustomHook();
+
+  const {
+    setPopper,
+  } = useCustomHook();
 
   return (
     <Box
       sx={{
         display: "flex",
+
         width: "100vw",
+
         height: "100vh",
+
         maxHeight: "100vh",
+
         overflow: "hidden",
+
         overscrollBehavior: "none",
       }}
     >
