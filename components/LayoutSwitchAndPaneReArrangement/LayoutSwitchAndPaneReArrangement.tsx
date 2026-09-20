@@ -161,15 +161,85 @@ const LayoutSwitchAndPaneReArrangement = () => {
     {
       label: "Pane Re-Arrangement",
       value: "pane-re-arrangement",
-
       content: (
         <Box
-          sx={{
+        sx={{
             width: "100%",
             height: "100%",
-          }}
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+            padding: "8px",
+        }}
         >
-          Pane Re-Arrangement Content
+        {/* Dossier */}
+        <Box
+            sx={{
+            minWidth: "100px",
+            height: "36px",
+            padding: "6px 12px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: "14px",
+            fontWeight: 600,
+            color: defaultColor,
+            borderRadius: "6px",
+            lineHeight: "normal",
+            backgroundColor: "#FFFFFF",
+            border: "1px solid #D0D5DD",
+            boxShadow: "none",
+            boxSizing: "border-box",
+            }}
+        >
+            Dossier
+        </Box>
+
+        {/* Map */}
+        <Box
+            sx={{
+            minWidth: "100px",
+            height: "36px",
+            padding: "6px 12px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: "14px",
+            fontWeight: 600,
+            color: defaultColor,
+            borderRadius: "6px",
+            lineHeight: "normal",
+            backgroundColor: "#FFFFFF",
+            border: "1px solid #D0D5DD",
+            boxShadow: "none",
+            boxSizing: "border-box",
+            }}
+        >
+            Map
+        </Box>
+
+        {/* Booking */}
+        <Box
+            sx={{
+            minWidth: "100px",
+            height: "36px",
+            padding: "6px 12px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: "14px",
+            fontWeight: 600,
+            color: defaultColor,
+            borderRadius: "6px",
+            lineHeight: "normal",
+            backgroundColor: "#FFFFFF",
+            border: "1px solid #D0D5DD",
+            boxShadow: "none",
+            boxSizing: "border-box",
+            }}
+        >
+            Booking
+        </Box>
         </Box>
       ),
     },
