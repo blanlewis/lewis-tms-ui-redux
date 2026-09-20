@@ -24,7 +24,6 @@ const CustomPopper = () => {
       >
         <Box
           sx={{
-            p: 1,
             bgcolor: 'background.paper',
             borderRadius: '8px',
             boxShadow: 3,

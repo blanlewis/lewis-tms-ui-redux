@@ -1,10 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { Box, Typography } from "@mui/material";
 import { useCustomHook } from "@/app/utils/hook";
-import LayoutSwitchToggle from "@/components/LayoutSwitchToggle";
 import LayoutPaneRearrange from "@/components/LayoutPaneRearrange";
+import LayoutSwitchAndPaneReArrangement from "@/components/LayoutSwitchAndPaneReArrangement";
 
 const CommonMiniDrawerLayout = dynamic(
   () => import("@/components/CommonMiniDrawerLayout"),
@@ -31,21 +30,13 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
       ]}
       secondaryListItems={[
         {
-          label: "layout-switch",
-          customNode: <LayoutSwitchToggle />,
-        },
-        {
           label: "layout-pane-rearrange",
           customNode: <LayoutPaneRearrange />,
           onClick: (event) => {
             const anchorEl = event.currentTarget;
             setPopper(
               anchorEl,
-              <Box sx={{ p: 2 }}>
-                <Typography>
-                  Blan
-                </Typography>
-              </Box>,
+              <LayoutSwitchAndPaneReArrangement />,
               "right"
             );
           },

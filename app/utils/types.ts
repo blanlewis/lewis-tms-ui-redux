@@ -97,30 +97,24 @@ const customHookInitialState: CustomHookState = {
     loginId: "",
     isLoading: false,
     isSessionChecked: false,
-
     snackbar: {
         open: false,
         message: "",
         severity: SnackbarSeverityEnum.INFO,
     },
-
     pageLayout: {
         layout: PageLayoutEnum.TWO_PANEL_LAYOUT,
         pane1: PageLayoutPaneEnum.DOSSIER_PANE,
         pane2: PageLayoutPaneEnum.MAP_PANE,
         pane3: PageLayoutPaneEnum.BOOKING_PANE,
     },
-
     activeBookingTab: BookingTabsDataEnum.ALL,
-
     popper: {
         anchorElForPopper: null,
         popperContent: null,
         popperPlacement: "bottom",
     },
-
     selectedBookings: [],
-
     analyseOnMapBookingId: {
         bookingId: null,
         source: {
