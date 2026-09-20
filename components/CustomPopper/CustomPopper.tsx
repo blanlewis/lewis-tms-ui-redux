@@ -12,13 +12,28 @@ const CustomPopper = () => {
   const id = open ? 'simple-popper' : undefined;
 
   return (
-      <Popper id={id} open={open} anchorEl={popper.anchorElForPopper} placement={popper.popperPlacement} sx={{ zIndex: 1202 }}>
-        <ClickAwayListener onClickAway={() => setPopper(null, null, "bottom")}>
-          <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
-            {popper.popperContent}
-          </Box>
-        </ClickAwayListener>
-      </Popper>
+    <Popper
+      id={id}
+      open={open}
+      anchorEl={popper.anchorElForPopper}
+      placement={popper.popperPlacement}
+      sx={{ zIndex: 1202 }}
+    >
+      <ClickAwayListener
+        onClickAway={() => setPopper(null, null, "bottom")}
+      >
+        <Box
+          sx={{
+            p: 1,
+            bgcolor: 'background.paper',
+            borderRadius: '8px',
+            boxShadow: 3,
+          }}
+        >
+          {popper.popperContent}
+        </Box>
+      </ClickAwayListener>
+    </Popper>
   );
 };
 
