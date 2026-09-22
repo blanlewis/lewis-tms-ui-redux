@@ -44,8 +44,18 @@ const useCustomHook = () => {
         try {
             const currentUser = await getCurrentUserApi();
             if (currentUser) {
+                const storedDataInLocalStorage = localStorage.getItem(`localStorage_${currentUser}`);
+                const parsedStoredDataInLocalStorage = storedDataInLocalStorage ? JSON.parse(storedDataInLocalStorage) : null;
                 setCustomHookState({
                     loginId: currentUser,
+                    ...(parsedStoredDataInLocalStorage?.pageLayout
+                        ? {
+                            pageLayout: {
+                                ...state.pageLayout,
+                                ...parsedStoredDataInLocalStorage.pageLayout,
+                            },
+                        }
+                        : {}),
                 });
             }
             return currentUser;
