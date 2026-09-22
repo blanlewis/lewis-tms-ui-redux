@@ -54,8 +54,6 @@ const TwoPanelLayout = ({
                         sx={{
                             width: "100%",
                             height: "100%",
-                            boxSizing: "border-box",
-                            border: "1px solid blue",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
@@ -124,8 +122,6 @@ const ThreePanelLayout = ({
                                 sx={{
                                     width: "100%",
                                     height: "100%",
-                                    boxSizing: "border-box",
-                                    border: "1px solid green",
                                 }}
                             >
                                 {pageLayoutPane3 === PageLayoutPaneEnum.BOOKING_PANE ? (
@@ -150,8 +146,6 @@ const ThreePanelLayout = ({
                         sx={{
                             width: "100%",
                             height: "100%",
-                            boxSizing: "border-box",
-                            border: "1px solid blue",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
@@ -220,8 +214,6 @@ const ClassicLayout = ({
                                 sx={{
                                     width: "100%",
                                     height: "100%",
-                                    boxSizing: "border-box",
-                                    border: "1px solid blue",
                                     display: "flex",
                                     alignItems: "center",
                                     justifyContent: "center",
@@ -249,8 +241,6 @@ const ClassicLayout = ({
                         sx={{
                             width: "100%",
                             height: "100%",
-                            boxSizing: "border-box",
-                            border: "1px solid green",
                         }}
                     >
                         {pageLayoutPane3 === PageLayoutPaneEnum.BOOKING_PANE ? (

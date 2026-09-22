@@ -5,7 +5,6 @@ import CustomTabs from "@/components/CustomTabs";
 import { useState } from "react";
 import CustomButton from "@/components/CustomButton";
 import { useCustomHook } from "@/app/utils/hook";
-import { useRef } from "react";
 import { PageLayoutEnum } from "@/app/utils/types";
 
 import ViewAgendaIcon from "@mui/icons-material/ViewAgenda";
@@ -19,7 +18,6 @@ const LayoutSwitchAndPaneReArrangement = () => {
   ] = useState("layout-switch");
 
   const { pageLayout, setPageLayout } = useCustomHook();
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const selectedColor = "#2970FF";
   const defaultColor = "#344054";
@@ -162,13 +160,12 @@ const LayoutSwitchAndPaneReArrangement = () => {
     },
 
     {
-    label: "Pane Re-Arrangement",
-    value: "pane-re-arrangement",
+      label: "Pane Re-Arrangement",
+      value: "pane-re-arrangement",
 
-    content: (
+      content: (
         <Box
-        ref={containerRef}
-        sx={{
+          sx={{
             width: "100%",
             height: "100%",
             display: "flex",
@@ -176,28 +173,84 @@ const LayoutSwitchAndPaneReArrangement = () => {
             gap: "8px",
             padding: "8px",
             overflow: "hidden",
-        }}
+          }}
         >
-            <CustomDragAndDrop
-                items={[
-                {
-                    id: "dossier",
-                    label: "Dossier",
-                },
-                {
-                    id: "map",
-                    label: "Map",
-                },
-                {
-                    id: "booking",
-                    label: "Booking",
-                },
-                ]}
-                containerRef={containerRef}
-            />
+          <CustomDragAndDrop>
+            <CustomDragAndDrop.Item id="dossier">
+              <Box
+                sx={{
+                  width: "100%",
+                  height: "36px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  color: "#344054",
+                  borderRadius: "6px",
+                  backgroundColor: "#FFFFFF",
+                  border: "1px solid #D0D5DD",
+                  boxSizing: "border-box",
+                  padding: "6px 12px",
+                  cursor: "grab",
+                  userSelect: "none",
+                }}
+              >
+                Dossier
+              </Box>
+            </CustomDragAndDrop.Item>
+
+            <CustomDragAndDrop.Item id="map">
+              <Box
+                sx={{
+                  width: "100%",
+                  height: "36px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  color: "#344054",
+                  borderRadius: "6px",
+                  backgroundColor: "#FFFFFF",
+                  border: "1px solid #D0D5DD",
+                  boxSizing: "border-box",
+                  padding: "6px 12px",
+                  cursor: "grab",
+                  userSelect: "none",
+                }}
+              >
+                Map
+              </Box>
+            </CustomDragAndDrop.Item>
+
+            <CustomDragAndDrop.Item id="booking">
+              <Box
+                sx={{
+                  width: "100%",
+                  height: "36px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  color: "#344054",
+                  borderRadius: "6px",
+                  backgroundColor: "#FFFFFF",
+                  border: "1px solid #D0D5DD",
+                  boxSizing: "border-box",
+                  padding: "6px 12px",
+                  cursor: "grab",
+                  userSelect: "none",
+                }}
+              >
+                Booking
+              </Box>
+            </CustomDragAndDrop.Item>
+          </CustomDragAndDrop>
         </Box>
-    ),
-    }
+      ),
+    },
   ];
 
   return (
