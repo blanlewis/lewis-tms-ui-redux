@@ -22,8 +22,18 @@ const useCustomHook = () => {
             const loginResponse =
                 await getLoginUserMutationApi(loginId, password);
             if (loginResponse?.success) {
+                const storedDataInLocalStorage = localStorage.getItem(`localStorage_${loginResponse.loginId}`);
+                const parsedStoredDataInLocalStorage = storedDataInLocalStorage ? JSON.parse(storedDataInLocalStorage) : null;
                 setCustomHookState({
                     loginId: loginResponse.loginId,
+                    ...(parsedStoredDataInLocalStorage?.pageLayout
+                        ? {
+                            pageLayout: {
+                                ...state.pageLayout,
+                                ...parsedStoredDataInLocalStorage.pageLayout,
+                            },
+                        }
+                        : {}),
                 });
                 setSnackbarState(true, "Login successful", SnackbarSeverityEnum.SUCCESS);
             } else {
