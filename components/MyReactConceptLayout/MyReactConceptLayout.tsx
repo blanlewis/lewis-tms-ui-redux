@@ -38,9 +38,6 @@ const TwoPanelLayout = ({
                     <Box
                         sx={{
                             width: "100%",
-                            height: "100%",
-                            boxSizing: "border-box",
-                            border: "1px solid red",
                         }}
                     >
                         {pageLayoutPane1 === PageLayoutPaneEnum.BOOKING_PANE ? (
@@ -111,9 +108,6 @@ const ThreePanelLayout = ({
                             <Box
                                 sx={{
                                     width: "100%",
-                                    height: "100%",
-                                    boxSizing: "border-box",
-                                    border: "1px solid red",
                                 }}
                             >
                                 {pageLayoutPane1 === PageLayoutPaneEnum.BOOKING_PANE ? (
@@ -210,9 +204,6 @@ const ClassicLayout = ({
                             <Box
                                 sx={{
                                     width: "100%",
-                                    height: "100%",
-                                    boxSizing: "border-box",
-                                    border: "1px solid red",
                                 }}
                             >
                                 {pageLayoutPane1 === PageLayoutPaneEnum.BOOKING_PANE ? (
