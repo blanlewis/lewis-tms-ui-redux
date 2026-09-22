@@ -26,10 +26,6 @@ const LayoutSwitchAndPaneReArrangement = () => {
   const defaultColor = "#344054";
   const hoverColor = "#2970FF";
 
-  /*
-   * Converts the pane enum stored in pageLayout
-   * into the ID used by CustomDragAndDrop.
-   */
   const pageLayoutPaneToId: Record<
     PageLayoutPaneEnum,
     string
@@ -39,10 +35,6 @@ const LayoutSwitchAndPaneReArrangement = () => {
     [PageLayoutPaneEnum.BOOKING_PANE]: "booking",
   };
 
-  /*
-   * Converts the CustomDragAndDrop ID back into
-   * the PageLayoutPaneEnum used by pageLayout.
-   */
   const paneIdToPageLayoutPane: Record<
     string,
     PageLayoutPaneEnum
@@ -51,20 +43,7 @@ const LayoutSwitchAndPaneReArrangement = () => {
     map: PageLayoutPaneEnum.MAP_PANE,
     booking: PageLayoutPaneEnum.BOOKING_PANE,
   };
-
-  /*
-   * The current pane order comes directly from pageLayout.
-   *
-   * Example:
-   *
-   * pane1 = MAP_PANE
-   * pane2 = BOOKING_PANE
-   * pane3 = DOSSIER_PANE
-   *
-   * becomes:
-   *
-   * ["map", "booking", "dossier"]
-   */
+  
   const paneOrder = [
     pageLayout.pane1,
     pageLayout.pane2,
