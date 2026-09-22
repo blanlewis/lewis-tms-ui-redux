@@ -92,7 +92,13 @@ type BookingTypes = {
     destinationLatitude: number;
     destinationLongitude: number;
 };
-
+const storedPageLayout =
+    typeof window !== "undefined"
+        ? window.localStorage.getItem("pageLayout")
+        : null;
+console.log(storedPageLayout);
+const parsedStoredPageLayout = storedPageLayout ? JSON.parse(storedPageLayout) : null;
+console.log(parsedStoredPageLayout);
 const customHookInitialState: CustomHookState = {
     loginId: "",
     isLoading: false,
@@ -107,6 +113,7 @@ const customHookInitialState: CustomHookState = {
         pane1: PageLayoutPaneEnum.DOSSIER_PANE,
         pane2: PageLayoutPaneEnum.MAP_PANE,
         pane3: PageLayoutPaneEnum.BOOKING_PANE,
+        ...parsedStoredPageLayout,
     },
     activeBookingTab: BookingTabsDataEnum.ALL,
     popper: {

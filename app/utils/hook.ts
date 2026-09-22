@@ -112,6 +112,13 @@ const useCustomHook = () => {
                 ...pageLayout,
             },
         });
+        localStorage.setItem(
+            "pageLayout",
+            JSON.stringify({
+                ...state.pageLayout,
+                ...pageLayout,
+            })
+        );
     };
 
     const setActiveBookingTab = (tab: BookingTabsDataEnum) => {
