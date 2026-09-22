@@ -32,7 +32,7 @@ export default function Home() {
 
     const isLoggedIn = Boolean(loginId);
     if (!isLoggedIn) {
-        redirect("/login");
+        redirect("/loginPage");
     }
 
     return <MyReactConceptLayout />;

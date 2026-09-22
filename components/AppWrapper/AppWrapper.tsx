@@ -25,7 +25,7 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
       firstListItems={[
         {
           label: "Lewis TMS Dashboard",
-          route: "/lewisTmsDashboard",
+          route: "/lewisTmsDashboardPage",
         },
       ]}
       secondaryListItems={[
