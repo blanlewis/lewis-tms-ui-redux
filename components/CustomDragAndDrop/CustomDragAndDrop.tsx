@@ -2,11 +2,11 @@
 
 import {
   Children,
-  createContext,
-  useContext,
+  useEffect,
+  useRef,
   useState,
+  type ReactElement,
   type ReactNode,
-  type MutableRefObject,
 } from "react";
 
 import { DragDropProvider } from "@dnd-kit/react";
@@ -16,6 +16,8 @@ import { RestrictToElement } from "@dnd-kit/dom/modifiers";
 
 interface CustomDragAndDropProps {
   children: ReactNode;
+  initialOrder: string[];
+  onRearrange: (newOrder: string[]) => void;
 }
 
 interface CustomDragAndDropItemProps {
@@ -26,16 +28,12 @@ interface CustomDragAndDropItemProps {
 interface SortableItemProps {
   id: string;
   index: number;
-  containerRef: MutableRefObject<HTMLDivElement | null>;
+  containerRef: React.RefObject<HTMLDivElement | null>;
   children: ReactNode;
 }
 
-interface DragAndDropContextValue {
-  containerRef: MutableRefObject<HTMLDivElement | null>;
-}
-
-const DragAndDropContext =
-  createContext<DragAndDropContextValue | null>(null);
+type DragAndDropItemElement =
+  ReactElement<CustomDragAndDropItemProps>;
 
 const SortableItem = ({
   id,
@@ -68,161 +66,112 @@ const SortableItem = ({
 };
 
 const CustomDragAndDropItem = ({
-  id,
   children,
 }: CustomDragAndDropItemProps) => {
-  const context = useContext(DragAndDropContext);
-
-  if (!context) {
-    throw new Error(
-      "CustomDragAndDrop.Item must be used inside CustomDragAndDrop."
-    );
-  }
-
-  return (
-    <SortableItem
-      id={id}
-      index={0}
-      containerRef={context.containerRef}
-    >
-      {children}
-    </SortableItem>
-  );
+  return <>{children}</>;
 };
 
 const CustomDragAndDrop = ({
   children,
+  initialOrder,
+  onRearrange,
 }: CustomDragAndDropProps) => {
-  const containerRef =
-    useState<MutableRefObject<HTMLDivElement | null>>(
-      () => ({ current: null })
-    )[0];
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const childArray = Children.toArray(children);
+  const childArray = Children.toArray(
+    children
+  ) as DragAndDropItemElement[];
 
-  const [itemOrder, setItemOrder] = useState(() =>
-    childArray.map((_, index) => index)
+  const [itemOrder, setItemOrder] = useState<string[]>(
+    initialOrder
+  );
+
+  /*
+   * Keep the local drag/drop order in sync with pageLayout
+   * when the parent changes it.
+   */
+  useEffect(() => {
+    setItemOrder(initialOrder);
+  }, [initialOrder]);
+
+  const itemMap = new Map(
+    childArray.map((child) => [
+      child.props.id,
+      child,
+    ])
   );
 
   return (
-    <DragAndDropContext.Provider
-      value={{
-        containerRef,
+    <DragDropProvider
+      onDragEnd={(event) => {
+        if (event.canceled) {
+          return;
+        }
+
+        const { source } = event.operation;
+
+        if (
+          source &&
+          "initialIndex" in source &&
+          "index" in source
+        ) {
+          const initialIndex = Number(source.initialIndex);
+          const newIndex = Number(source.index);
+
+          if (initialIndex !== newIndex) {
+            const newOrder = [...itemOrder];
+
+            const [removedItem] = newOrder.splice(
+              initialIndex,
+              1
+            );
+
+            newOrder.splice(newIndex, 0, removedItem);
+
+            setItemOrder(newOrder);
+
+            /*
+             * Tell the parent about the successful
+             * rearrangement.
+             */
+            onRearrange(newOrder);
+          }
+        }
       }}
     >
-      <DragDropProvider
-        onDragEnd={(event) => {
-          if (event.canceled) {
-            return;
-          }
-
-          const { source } = event.operation;
-
-          if (
-            source &&
-            "initialIndex" in source &&
-            "index" in source
-          ) {
-            const initialIndex = Number(source.initialIndex);
-            const newIndex = Number(source.index);
-
-            if (initialIndex !== newIndex) {
-              setItemOrder((currentOrder) => {
-                const newOrder = [...currentOrder];
-
-                const [removedItem] = newOrder.splice(
-                  initialIndex,
-                  1
-                );
-
-                newOrder.splice(newIndex, 0, removedItem);
-
-                return newOrder;
-              });
-            }
-          }
+      <div
+        ref={containerRef}
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px",
+          alignItems: "stretch",
+          overflow: "hidden",
+          position: "relative",
         }}
       >
-        <div
-          ref={(element) => {
-            containerRef.current = element;
-          }}
-          style={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            gap: "8px",
-            alignItems: "stretch",
-            overflow: "hidden",
-            position: "relative",
-          }}
-        >
-          {itemOrder.map((childIndex, index) => {
-            const child = childArray[childIndex];
+        {itemOrder.map((id, index) => {
+          const item = itemMap.get(id);
 
-            if (!child) {
-              return null;
-            }
+          if (!item) {
+            return null;
+          }
 
-            return (
-              <SortableItemWrapper
-                key={childIndex}
-                child={child}
-                index={index}
-                containerRef={containerRef}
-              />
-            );
-          })}
-        </div>
-      </DragDropProvider>
-    </DragAndDropContext.Provider>
-  );
-};
-
-interface SortableItemWrapperProps {
-  child: ReactNode;
-  index: number;
-  containerRef: MutableRefObject<HTMLDivElement | null>;
-}
-
-const SortableItemWrapper = ({
-  child,
-  index,
-  containerRef,
-}: SortableItemWrapperProps) => {
-  /*
-   * The actual ID comes from CustomDragAndDrop.Item.
-   */
-  if (
-    typeof child === "object" &&
-    child !== null &&
-    "props" in child
-  ) {
-    const element = child as React.ReactElement<{
-      id?: string;
-      children?: ReactNode;
-    }>;
-
-    return (
-      <SortableItem
-        id={element.props.id ?? `item-${index}`}
-        index={index}
-        containerRef={containerRef}
-      >
-        {element.props.children}
-      </SortableItem>
-    );
-  }
-
-  return (
-    <SortableItem
-      id={`item-${index}`}
-      index={index}
-      containerRef={containerRef}
-    >
-      {child}
-    </SortableItem>
+          return (
+            <SortableItem
+              key={id}
+              id={id}
+              index={index}
+              containerRef={containerRef}
+            >
+              {item.props.children}
+            </SortableItem>
+          );
+        })}
+      </div>
+    </DragDropProvider>
   );
 };
 

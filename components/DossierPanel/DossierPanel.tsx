@@ -65,6 +65,7 @@ const DossierPanel = () => {
                 display: "flex",
                 flexDirection: "column",
                 gap: "8px",
+                width: "100%",
             }}
         >
             {dossierData.map((dossier) => (

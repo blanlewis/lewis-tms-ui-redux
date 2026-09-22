@@ -5,7 +5,10 @@ import CustomTabs from "@/components/CustomTabs";
 import { useState } from "react";
 import CustomButton from "@/components/CustomButton";
 import { useCustomHook } from "@/app/utils/hook";
-import { PageLayoutEnum } from "@/app/utils/types";
+import {
+  PageLayoutEnum,
+  PageLayoutPaneEnum,
+} from "@/app/utils/types";
 
 import ViewAgendaIcon from "@mui/icons-material/ViewAgenda";
 import AutoAwesomeMosaicIcon from "@mui/icons-material/AutoAwesomeMosaic";
@@ -22,6 +25,51 @@ const LayoutSwitchAndPaneReArrangement = () => {
   const selectedColor = "#2970FF";
   const defaultColor = "#344054";
   const hoverColor = "#2970FF";
+
+  /*
+   * Converts the pane enum stored in pageLayout
+   * into the ID used by CustomDragAndDrop.
+   */
+  const pageLayoutPaneToId: Record<
+    PageLayoutPaneEnum,
+    string
+  > = {
+    [PageLayoutPaneEnum.DOSSIER_PANE]: "dossier",
+    [PageLayoutPaneEnum.MAP_PANE]: "map",
+    [PageLayoutPaneEnum.BOOKING_PANE]: "booking",
+  };
+
+  /*
+   * Converts the CustomDragAndDrop ID back into
+   * the PageLayoutPaneEnum used by pageLayout.
+   */
+  const paneIdToPageLayoutPane: Record<
+    string,
+    PageLayoutPaneEnum
+  > = {
+    dossier: PageLayoutPaneEnum.DOSSIER_PANE,
+    map: PageLayoutPaneEnum.MAP_PANE,
+    booking: PageLayoutPaneEnum.BOOKING_PANE,
+  };
+
+  /*
+   * The current pane order comes directly from pageLayout.
+   *
+   * Example:
+   *
+   * pane1 = MAP_PANE
+   * pane2 = BOOKING_PANE
+   * pane3 = DOSSIER_PANE
+   *
+   * becomes:
+   *
+   * ["map", "booking", "dossier"]
+   */
+  const paneOrder = [
+    pageLayout.pane1,
+    pageLayout.pane2,
+    pageLayout.pane3,
+  ].map((pane) => pageLayoutPaneToId[pane]);
 
   const tabsData = [
     {
@@ -175,7 +223,17 @@ const LayoutSwitchAndPaneReArrangement = () => {
             overflow: "hidden",
           }}
         >
-          <CustomDragAndDrop>
+          <CustomDragAndDrop
+            initialOrder={paneOrder}
+            onRearrange={(newOrder) => {
+              setPageLayout({
+                pane1: paneIdToPageLayoutPane[newOrder[0]],
+                pane2: paneIdToPageLayoutPane[newOrder[1]],
+                pane3: paneIdToPageLayoutPane[newOrder[2]],
+              });
+            }}
+          >
+            {/* Dossier */}
             <CustomDragAndDrop.Item id="dossier">
               <Box
                 sx={{
@@ -200,6 +258,7 @@ const LayoutSwitchAndPaneReArrangement = () => {
               </Box>
             </CustomDragAndDrop.Item>
 
+            {/* Map */}
             <CustomDragAndDrop.Item id="map">
               <Box
                 sx={{
@@ -224,6 +283,7 @@ const LayoutSwitchAndPaneReArrangement = () => {
               </Box>
             </CustomDragAndDrop.Item>
 
+            {/* Booking */}
             <CustomDragAndDrop.Item id="booking">
               <Box
                 sx={{
