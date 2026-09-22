@@ -10,6 +10,8 @@ const useCustomHook = () => {
     }
     const { state, dispatch } = context;
 
+    const storageKey = `localStorage_${state.loginId}`;
+
     const setCustomHookState = (customHookState: Partial<CustomHookState>) => {
         dispatch({ type: CustomHookActionEnum.SET_CUSTOM_HOOK_DATA, payload: customHookState });
     };
@@ -113,10 +115,13 @@ const useCustomHook = () => {
             },
         });
         localStorage.setItem(
-            "pageLayout",
+            storageKey,
             JSON.stringify({
-                ...state.pageLayout,
-                ...pageLayout,
+                loginId: state.loginId,
+                pageLayout: {
+                    ...state.pageLayout,
+                    ...pageLayout,
+                },
             })
         );
     };
