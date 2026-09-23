@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 
@@ -194,9 +195,12 @@ const NavList = ({
   items,
   open,
 }: NavListProps) => {
+  const pathname = usePathname();
+
   return (
     <List sx={{ p: 0 }}>
       {items.map((item, index) => {
+        const isActivePage = item.route === pathname;
         return (
           <ListItem
             key={
@@ -220,6 +224,12 @@ const NavList = ({
                 {
                   minHeight: 48,
                   px: 2.5,
+
+                  color: isActivePage ? "#2970FF" : "inherit",
+
+                  "& .MuiListItemIcon-root": {
+                    color: isActivePage ? "#2970FF" : "inherit",
+                  },
                 },
 
                 open
@@ -238,6 +248,8 @@ const NavList = ({
                     justifyContent: "center",
                     alignItems: "center",
                     display: "flex",
+
+                    color: isActivePage ? "#2970FF" : "inherit",
                   },
 
                   open
@@ -264,6 +276,9 @@ const NavList = ({
                 sx={{
                   opacity: open ? 1 : 0,
                   whiteSpace: "nowrap",
+                  "& .MuiListItemText-primary": {
+                    color: isActivePage ? "#2970FF" : "inherit",
+                  },
                 }}
               />
             </ListItemButton>
