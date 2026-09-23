@@ -197,10 +197,21 @@ const NavList = ({
 }: NavListProps) => {
   const pathname = usePathname();
 
+  const { popper } = useCustomHook();
+
+  const isPopperOpen = Boolean(popper?.anchorElForPopper);
+
   return (
     <List sx={{ p: 0 }}>
       {items.map((item, index) => {
         const isActivePage = item.route === pathname;
+
+        // For route items → active based on pathname
+        // For popup items → active only while popper is open
+        const isActive =
+          isActivePage ||
+          (!item.route && isPopperOpen);
+
         return (
           <ListItem
             key={
@@ -225,10 +236,10 @@ const NavList = ({
                   minHeight: 48,
                   px: 2.5,
 
-                  color: isActivePage ? "#2970FF" : "inherit",
+                  color: isActive ? "#2970FF" : "inherit",
 
                   "& .MuiListItemIcon-root": {
-                    color: isActivePage ? "#2970FF" : "inherit",
+                    color: isActive ? "#2970FF" : "inherit",
                   },
                 },
 
@@ -248,10 +259,8 @@ const NavList = ({
                     justifyContent: "center",
                     alignItems: "center",
                     display: "flex",
-
-                    color: isActivePage ? "#2970FF" : "inherit",
+                    color: isActive ? "#2970FF" : "inherit",
                   },
-
                   open
                     ? {
                         mr: 3,
@@ -277,7 +286,7 @@ const NavList = ({
                   opacity: open ? 1 : 0,
                   whiteSpace: "nowrap",
                   "& .MuiListItemText-primary": {
-                    color: isActivePage ? "#2970FF" : "inherit",
+                    color: isActive ? "#2970FF" : "inherit",
                   },
                 }}
               />
