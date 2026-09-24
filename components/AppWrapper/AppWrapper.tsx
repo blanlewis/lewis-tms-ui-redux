@@ -2,8 +2,10 @@
 
 import dynamic from "next/dynamic";
 import { useCustomHook } from "@/app/utils/hook";
+import { Box } from "@mui/material";
 import LayoutPaneRearrange from "@/components/LayoutPaneRearrange";
 import LayoutSwitchAndPaneReArrangement from "@/components/LayoutSwitchAndPaneReArrangement";
+import { LanguageSelectionIcon, LanguageSelectionOption } from "@/components/LanguageSelection";
 
 const CommonMiniDrawerLayout = dynamic(
   () => import("@/components/CommonMiniDrawerLayout"),
@@ -41,6 +43,18 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
             );
           },
         },
+        {
+          label: "another-item",
+          customNode: <Box><LanguageSelectionIcon /></Box>,
+          onClick: (event) => {
+            const anchorEl = event.currentTarget;
+            setPopper(
+              anchorEl,
+              <LanguageSelectionOption />,
+              "right"
+            );
+          },
+        }
       ]}
       appBody={children}
       toolbarAvatar={loginId}

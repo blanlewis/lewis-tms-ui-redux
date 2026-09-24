@@ -191,26 +191,23 @@ interface NavListProps {
   open: boolean;
 }
 
-const NavList = ({
-  items,
-  open,
-}: NavListProps) => {
+const NavList = ({ items, open }: NavListProps) => {
   const pathname = usePathname();
 
-  const { popper } = useCustomHook();
-
-  const isPopperOpen = Boolean(popper?.anchorElForPopper);
+  const [activePopupItem, setActivePopupItem] = React.useState<string | null>(
+    null
+  );
 
   return (
     <List sx={{ p: 0 }}>
       {items.map((item, index) => {
         const isActivePage = item.route === pathname;
 
-        // For route items → active based on pathname
-        // For popup items → active only while popper is open
-        const isActive =
-          isActivePage ||
-          (!item.route && isPopperOpen);
+        const isActivePopup =
+          !item.route &&
+          activePopupItem === item.label;
+
+        const isActive = isActivePage || isActivePopup;
 
         return (
           <ListItem
@@ -230,7 +227,13 @@ const NavList = ({
                     href: item.route,
                   }
                 : {})}
-              onClick={item.onClick}
+              onClick={(event) => {
+                if (!item.route) {
+                  setActivePopupItem(item.label ?? null);
+                }
+
+                item.onClick?.(event);
+              }}
               sx={[
                 {
                   minHeight: 48,
@@ -261,6 +264,7 @@ const NavList = ({
                     display: "flex",
                     color: isActive ? "#2970FF" : "inherit",
                   },
+
                   open
                     ? {
                         mr: 3,
@@ -285,6 +289,7 @@ const NavList = ({
                 sx={{
                   opacity: open ? 1 : 0,
                   whiteSpace: "nowrap",
+
                   "& .MuiListItemText-primary": {
                     color: isActive ? "#2970FF" : "inherit",
                   },
