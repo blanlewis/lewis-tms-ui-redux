@@ -39,19 +39,21 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
             setPopper(
               anchorEl,
               <LayoutSwitchAndPaneReArrangement />,
-              "right"
+              "right",
+              "layout-pane-rearrange"
             );
           },
         },
         {
-          label: "another-item",
+          label: "language-selection",
           customNode: <Box><LanguageSelectionIcon /></Box>,
           onClick: (event) => {
             const anchorEl = event.currentTarget;
             setPopper(
               anchorEl,
               <LanguageSelectionOption />,
-              "right"
+              "right",
+              "language-selection"
             );
           },
         }

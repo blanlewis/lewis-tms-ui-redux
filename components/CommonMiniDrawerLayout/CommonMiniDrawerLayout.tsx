@@ -194,18 +194,16 @@ interface NavListProps {
 const NavList = ({ items, open }: NavListProps) => {
   const pathname = usePathname();
 
-  const [activePopupItem, setActivePopupItem] = React.useState<string | null>(
-    null
-  );
+  const { popper } = useCustomHook();
 
   return (
     <List sx={{ p: 0 }}>
       {items.map((item, index) => {
         const isActivePage = item.route === pathname;
 
-        const isActivePopup =
-          !item.route &&
-          activePopupItem === item.label;
+      const isActivePopup =
+        !item.route &&
+        popper?.popupKey === item.label;
 
         const isActive = isActivePage || isActivePopup;
 
@@ -228,10 +226,6 @@ const NavList = ({ items, open }: NavListProps) => {
                   }
                 : {})}
               onClick={(event) => {
-                if (!item.route) {
-                  setActivePopupItem(item.label ?? null);
-                }
-
                 item.onClick?.(event);
               }}
               sx={[
@@ -315,7 +309,8 @@ interface AppTopBarProps {
   setPopper: (
     anchorElForPopper: HTMLElement | null,
     popperContent: React.ReactNode | null,
-    popperPlacement: "top" | "bottom" | "left" | "right"
+    popperPlacement: "top" | "bottom" | "left" | "right",
+    popupKey: string | null
   ) => void;
 }
 
@@ -394,7 +389,8 @@ const AppTopBar = ({
                 <ProfilePopup
                   toolbarAvatar={toolbarAvatar}
                 />,
-                "bottom"
+                "bottom",
+                null
               );
             }}
           >

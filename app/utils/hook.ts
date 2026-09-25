@@ -152,12 +152,13 @@ const useCustomHook = () => {
         });
     };
 
-    const setPopper = (anchorElForPopper: HTMLElement | null, popperContent: React.ReactNode | null, popperPlacement: "top" | "bottom" | "left" | "right") => {
+    const setPopper = (anchorElForPopper: HTMLElement | null, popperContent: React.ReactNode | null, popperPlacement: "top" | "bottom" | "left" | "right", popupKey: string | null = null) => {
         setCustomHookState({
             popper: {
                 anchorElForPopper,
                 popperContent,
                 popperPlacement,
+                popupKey,
             },
         });
     };
