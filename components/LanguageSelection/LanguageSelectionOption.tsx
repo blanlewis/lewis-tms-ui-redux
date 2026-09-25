@@ -1,9 +1,50 @@
+"use client";
+
 import { Box } from "@mui/material";
 import CustomButton from "@/components/CustomButton";
 import { useIntl } from "react-intl";
+import { useLanguage } from "@/app/utils/languageTranslation/LanguageContext";
 
 const LanguageSelectionOption = () => {
-  const languages = ["English", "Kannada", "Hindi"];
+  const intl = useIntl();
+  const { setLocale } = useLanguage();
+
+  const ENGLISH_TEXT = intl.formatMessage({
+    id: "english",
+    defaultMessage: "English",
+  });
+
+  const KANNADA_TEXT = intl.formatMessage({
+    id: "kannada",
+    defaultMessage: "Kannada",
+  });
+
+  const HINDI_TEXT = intl.formatMessage({
+    id: "hindi",
+    defaultMessage: "Hindi",
+  });
+
+  const languages: {
+    id: string;
+    locale: "en" | "kn" | "hi";
+    text: string;
+  }[] = [
+    {
+      id: "english",
+      locale: "en",
+      text: ENGLISH_TEXT,
+    },
+    {
+      id: "kannada",
+      locale: "kn",
+      text: KANNADA_TEXT,
+    },
+    {
+      id: "hindi",
+      locale: "hi",
+      text: HINDI_TEXT,
+    },
+  ];
 
   return (
     <Box
@@ -21,12 +62,12 @@ const LanguageSelectionOption = () => {
     >
       {languages.map((language) => (
         <CustomButton
-          key={language}
-          buttonText={language}
+          key={language.id}
+          buttonText={language.text}
           buttonTextOrIconColor="#1976D2"
           icon={null}
           isButtonDisabled={false}
-          onButtonClicked={() => {}}
+          onButtonClicked={() => setLocale(language.locale)}
           buttonMinWidth="115px"
           buttonHeight="36px"
           buttonFontSize="14px"
