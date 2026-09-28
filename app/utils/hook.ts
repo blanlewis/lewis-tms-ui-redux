@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { CustomHookContext } from "./context";
-import { CustomHookState, CustomHookActionEnum, SnackbarSeverityEnum, PageLayoutEnum,BookingTabsDataEnum } from "./types";
-import { getLoginUserMutationApi,getCurrentUserApi } from "./service";
+import { CustomHookState, CustomHookActionEnum, SnackbarSeverityEnum, PageLayoutEnum,BookingTabsDataEnum, PageLayoutPaneEnum } from "./types";
+import { getLoginUserMutationApi,getCurrentUserApi, getLogoutMutationApi } from "./service";
 
 const useCustomHook = () => {
     const context = useContext(CustomHookContext);
@@ -9,6 +9,8 @@ const useCustomHook = () => {
         throw new Error("useCustomHook must be used within a CustomHookProvider");
     }
     const { state, dispatch } = context;
+
+    const storageKey = `localStorage_${state.loginId}`;
 
     const setCustomHookState = (customHookState: Partial<CustomHookState>) => {
         dispatch({ type: CustomHookActionEnum.SET_CUSTOM_HOOK_DATA, payload: customHookState });
@@ -20,8 +22,18 @@ const useCustomHook = () => {
             const loginResponse =
                 await getLoginUserMutationApi(loginId, password);
             if (loginResponse?.success) {
+                const storedDataInLocalStorage = localStorage.getItem(`localStorage_${loginResponse.loginId}`);
+                const parsedStoredDataInLocalStorage = storedDataInLocalStorage ? JSON.parse(storedDataInLocalStorage) : null;
                 setCustomHookState({
                     loginId: loginResponse.loginId,
+                    ...(parsedStoredDataInLocalStorage?.pageLayout
+                        ? {
+                            pageLayout: {
+                                ...state.pageLayout,
+                                ...parsedStoredDataInLocalStorage.pageLayout,
+                            },
+                        }
+                        : {}),
                 });
                 setSnackbarState(true, "Login successful", SnackbarSeverityEnum.SUCCESS);
             } else {
@@ -42,8 +54,18 @@ const useCustomHook = () => {
         try {
             const currentUser = await getCurrentUserApi();
             if (currentUser) {
+                const storedDataInLocalStorage = localStorage.getItem(`localStorage_${currentUser}`);
+                const parsedStoredDataInLocalStorage = storedDataInLocalStorage ? JSON.parse(storedDataInLocalStorage) : null;
                 setCustomHookState({
                     loginId: currentUser,
+                    ...(parsedStoredDataInLocalStorage?.pageLayout
+                        ? {
+                            pageLayout: {
+                                ...state.pageLayout,
+                                ...parsedStoredDataInLocalStorage.pageLayout,
+                            },
+                        }
+                        : {}),
                 });
             }
             return currentUser;
@@ -54,6 +76,35 @@ const useCustomHook = () => {
             setCustomHookState({
                 isSessionChecked: true,
             });
+            setIsLoadingState(false);
+        }
+    };
+
+    const logoutState = async () => {
+        setIsLoadingState(true);
+        try {
+            const logoutResponse = await getLogoutMutationApi();
+            if (!logoutResponse) {
+                setCustomHookState({
+                    loginId: "",
+                });
+                setPopper(null, null, "bottom");
+                setSnackbarState(
+                    true,
+                    "Logout successful",
+                    SnackbarSeverityEnum.SUCCESS
+                );
+            }
+            return logoutResponse;
+        } catch (error) {
+            console.error("Logout failed:", error);
+            setSnackbarState(
+                true,
+                "Logout failed. Please try again.",
+                SnackbarSeverityEnum.ERROR
+            );
+            throw error;
+        } finally {
             setIsLoadingState(false);
         }
     };
@@ -74,10 +125,25 @@ const useCustomHook = () => {
         });
     };
 
-    const setPageLayout = (layout: PageLayoutEnum) => {
+    const setPageLayout = (
+        pageLayout: Partial<CustomHookState["pageLayout"]>
+    ) => {
         setCustomHookState({
-            pageLayout: layout,
+            pageLayout: {
+                ...state.pageLayout,
+                ...pageLayout,
+            },
         });
+        localStorage.setItem(
+            storageKey,
+            JSON.stringify({
+                loginId: state.loginId,
+                pageLayout: {
+                    ...state.pageLayout,
+                    ...pageLayout,
+                },
+            })
+        );
     };
 
     const setActiveBookingTab = (tab: BookingTabsDataEnum) => {
@@ -86,15 +152,46 @@ const useCustomHook = () => {
         });
     };
 
+    const setPopper = (anchorElForPopper: HTMLElement | null, popperContent: React.ReactNode | null, popperPlacement: "top" | "bottom" | "left" | "right", popupKey: string | null = null) => {
+        setCustomHookState({
+            popper: {
+                anchorElForPopper,
+                popperContent,
+                popperPlacement,
+                popupKey,
+            },
+        });
+    };
+
+    const setSelectedBookings = (selectedBookings: number[]) => {
+        setCustomHookState({
+            selectedBookings,
+        });
+    };
+
+    const setAnalyseOnMapBookingId = (bookingId: number | null, source: { lat: number | null; long: number | null }, destination: { lat: number | null; long: number | null }) => {
+        setCustomHookState({
+            analyseOnMapBookingId: {
+                bookingId,
+                source,
+                destination,
+            },
+        });
+    };
+
     return {
         ...state,
         setCustomHookState,
         loginState,
         getCurrentUser,
+        logoutState,
         setIsLoadingState,
         setSnackbarState,
         setPageLayout,
         setActiveBookingTab,
+        setPopper,
+        setSelectedBookings,
+        setAnalyseOnMapBookingId,
     };
 };
 
