@@ -8,7 +8,8 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import FlagCircleSharpIcon from "@mui/icons-material/FlagCircleSharp";
 import LocalShippingSharpIcon from "@mui/icons-material/LocalShippingSharp";
-import { useCustomHook } from "@/app/utils/customHook/hook";
+import { useDispatch, useSelector } from "react-redux";
+import type { ReduxHookState } from "@/app/utils/redux2/types";
 
 // Leaflet needs a plain HTML icon, so a MUI icon is rendered to a marker once here.
 const createMuiMarkerIcon = (icon: React.ReactElement, size: number) =>
@@ -23,7 +24,7 @@ const MapComponent = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<LeafletMap | null>(null);
 
-  const { analyseOnMapBookingId } = useCustomHook();
+  const analyseOnMapBookingId = useSelector((state: { reduxHook: ReduxHookState }) => state.reduxHook.analyseOnMapBookingId);
 
   useEffect(() => {
     const container = containerRef.current;

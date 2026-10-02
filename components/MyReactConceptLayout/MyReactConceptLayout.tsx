@@ -1,11 +1,12 @@
 import { Box } from "@mui/material";
 import DossierPanel from "@/components/DossierPanel";
 import ReflexDragger from "@/components/ReflexDragger";
-import { useCustomHook } from "@/app/utils/customHook/hook";
+import { useDispatch, useSelector } from "react-redux";
+import type { ReduxHookState } from "@/app/utils/redux2/types";
 import {
     PageLayoutEnum,
     PageLayoutPaneEnum,
-} from "@/app/utils/customHook/types";
+} from "@/app/utils/redux2/types";
 import dynamic from "next/dynamic";
 import BookingPanel from "@/components/BookingPanel";
 
@@ -282,7 +283,7 @@ const ClassicLayout = ({
 };
 
 const MyReactConceptLayout = () => {
-    const { pageLayout } = useCustomHook();
+    const pageLayout = useSelector((state: { reduxHook: ReduxHookState }) => state.reduxHook.pageLayout);
 
     return pageLayout.layout === PageLayoutEnum.TWO_PANEL_LAYOUT ? (
         <TwoPanelLayout

@@ -6,17 +6,19 @@ import Image from "next/image";
 import CustomModal from "@/components/CustomModal";
 import CustomTextField from "@/components/CustomTextField";
 import CustomButton from "@/components/CustomButton";
-import { useCustomHook } from "@/app/utils/customHook/hook";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/app/utils/redux2/store";
+import { loginState } from "@/app/utils/redux2/functions";
 
 const LoginPageModal = () => {
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const { loginState } = useCustomHook();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleLogin = async () => {
-    const loginResponse = await loginState(loginId, password);
+    const loginResponse = await loginState(dispatch, loginId, password);
     console.log(loginResponse);
     if (loginResponse?.success) {
       router.push("/");

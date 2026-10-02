@@ -6,8 +6,7 @@ import CustomSnackbar from "@/components/CustomSnackbar/CustomSnackbar";
 import CustomPopper from "@/components/CustomPopper/CustomPopper";
 import { LanguageProvider } from "./utils/languageTranslation/LanguageContext";
 import IntlProviderWrapper from "./utils/languageTranslation/IntlProvider";
-import { CustomHookProvider } from "./utils/customHook/context";
-import ReduxProvider from "./redux2/ReduxProvider";
+import ReduxProvider from "./utils/redux2/ReduxProvider";
 export const metadata: Metadata = {
   title: "Lewis TMS",
   description: "Lewis Transport Management System",
@@ -25,11 +24,9 @@ export default function RootLayout({
         <LanguageProvider>
           <IntlProviderWrapper> 
           <AppRouterCacheProvider>
-            <CustomHookProvider>
               <AppWrapper>{children}</AppWrapper>
               <CustomSnackbar />
               <CustomPopper />
-            </CustomHookProvider>
           </AppRouterCacheProvider>
         </IntlProviderWrapper>
         </LanguageProvider>

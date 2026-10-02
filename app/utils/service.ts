@@ -1,15 +1,13 @@
 import { getLoginUserMutationQuery,getCurrentUserQuery, getLogoutMutationQuery, getBookingsQuery } from "./graphqlQueries";
-import { BookingTypes, LoginResponse } from "./types";
+import { BookingTypes, LoginResponse } from "@/app/utils/redux2/types";
 
 const getLoginUserMutationApi = async (
     loginId: string,
     password: string
 ): Promise<LoginResponse> => {
-
     const usersRequest = {
         query: getLoginUserMutationQuery(loginId, password),
     };
-
     console.log(
     "GRAPHQL URL:",
     process.env.NEXT_PUBLIC_GRAPHQL_URL
@@ -42,11 +40,9 @@ const getLoginUserMutationApi = async (
 };
 
 const getCurrentUserApi = async (): Promise<string | null> => {
-
     const usersRequest = {
         query: getCurrentUserQuery(),
     };
-
     try {
         const result = await fetch(
             process.env.NEXT_PUBLIC_GRAPHQL_URL!,

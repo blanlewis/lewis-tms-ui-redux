@@ -34,8 +34,10 @@ import {
 } from "@mui/icons-material";
 
 import CustomAvatar from "@/components/CustomAvatar";
-import { useCustomHook } from "@/app/utils/customHook/hook";
+import { useDispatch, useSelector } from "react-redux";
+import type { ReduxHookState } from "@/app/utils/redux2/types";
 import ProfilePopup from "./ProfilePopup";
+import CustomPopper from "../CustomPopper";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Constants
@@ -194,18 +196,16 @@ interface NavListProps {
 const NavList = ({ items, open }: NavListProps) => {
   const pathname = usePathname();
 
-  const { popper } = useCustomHook();
-
   return (
     <List sx={{ p: 0 }}>
       {items.map((item, index) => {
         const isActivePage = item.route === pathname;
 
-      const isActivePopup =
-        !item.route &&
-        popper?.popupKey === item.label;
-
-        const isActive = isActivePage || isActivePopup;
+        // const isActivePopup =
+        //   !item.route &&
+        //   popper?.popupKey === item.label;
+        // const isActive = isActivePage || isActivePopup;
+        const isActive = isActivePage;
 
         return (
           <ListItem
@@ -302,16 +302,18 @@ const NavList = ({ items, open }: NavListProps) => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 interface AppTopBarProps {
-  title: string;
-  open: boolean;
-  onOpen: () => void;
-  toolbarAvatar: string;
-  setPopper: (
-    anchorElForPopper: HTMLElement | null,
-    popperContent: React.ReactNode | null,
-    popperPlacement: "top" | "bottom" | "left" | "right",
-    popupKey: string | null
-  ) => void;
+    title: string;
+    open: boolean;
+    onOpen: () => void;
+    toolbarAvatar: string;
+    setPopper: React.Dispatch<
+        React.SetStateAction<{
+            anchorElForPopper: HTMLElement | null;
+            popperContent: React.ReactNode | null;
+            popperPlacement: "top" | "bottom" | "left" | "right";
+            popupKey: string | null;
+        }>
+    >;
 }
 
 const AppTopBar = ({
@@ -384,14 +386,16 @@ const AppTopBar = ({
               cursor: "pointer",
             }}
             onClick={(event) => {
-              setPopper(
-                event.currentTarget,
-                <ProfilePopup
-                  toolbarAvatar={toolbarAvatar}
-                />,
-                "bottom",
-                null
-              );
+              setPopper({
+                anchorElForPopper: event.currentTarget,
+                popperContent: (
+                  <ProfilePopup
+                    toolbarAvatar={toolbarAvatar}
+                  />
+                ),
+                popperPlacement: "bottom",
+                popupKey: null,
+              });
             }}
           >
             <CustomAvatar
@@ -519,9 +523,26 @@ const CommonMiniDrawerLayout = ({
 }: CommonMiniDrawerLayoutProps) => {
   const [open, setOpen] = React.useState(false);
 
-  const {
-    setPopper,
-  } = useCustomHook();
+  const [popper, setPopper] = React.useState<{
+      anchorElForPopper: HTMLElement | null;
+      popperContent: React.ReactNode | null;
+      popperPlacement: "top" | "bottom" | "left" | "right";
+      popupKey: string | null;
+  }>({
+      anchorElForPopper: null,
+      popperContent: null,
+      popperPlacement: "bottom",
+      popupKey: null,
+  });
+
+  const handleClosePopper = () => {
+    setPopper({
+        anchorElForPopper: null,
+        popperContent: null,
+        popperPlacement: "bottom",
+        popupKey: null,
+    });
+  };
 
   return (
     <Box
@@ -541,13 +562,13 @@ const CommonMiniDrawerLayout = ({
     >
       <CssBaseline />
 
-      <AppTopBar
-        title={appHeaderTitle}
-        open={open}
-        onOpen={() => setOpen(true)}
-        toolbarAvatar={toolbarAvatar}
-        setPopper={setPopper}
-      />
+    <AppTopBar
+      title={appHeaderTitle}
+      open={open}
+      onOpen={() => setOpen(true)}
+      toolbarAvatar={toolbarAvatar}
+      setPopper={setPopper}
+    />
 
       <MiniDrawer
         open={open}
@@ -559,6 +580,13 @@ const CommonMiniDrawerLayout = ({
       <AppBody drawerOpen={open}>
         {appBody}
       </AppBody>
+      <CustomPopper
+          anchorElForPopper={popper.anchorElForPopper}
+          popperContent={popper.popperContent}
+          popperPlacement={popper.popperPlacement}
+          popupKey={popper.popupKey}
+          onClose={handleClosePopper}
+      />
     </Box>
   );
 };

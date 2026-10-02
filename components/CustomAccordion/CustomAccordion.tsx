@@ -9,8 +9,8 @@ import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
 import CustomButton from "@/components/CustomButton";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setReduxHookState } from "@/app/redux2/reduxHookSlice";
-import ReduxHookState from "@/app/redux2/types";
+import { setReduxHookState } from "@/app/utils/redux2/reduxHookSlice";
+import ReduxHookState from "@/app/utils/redux2/types";
 
 interface CustomAccordionProps {
   header: React.ReactNode;

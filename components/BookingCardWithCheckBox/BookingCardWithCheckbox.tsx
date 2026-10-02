@@ -9,8 +9,8 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { BookingTypes } from "@/app/utils/customHook/types";
-import { useCustomHook } from "@/app/utils/customHook/hook";
+import { BookingTypes } from "@/app/utils/redux2/types";
+import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../CustomButton";
 
 type BookingCardWithCheckboxProps = {
@@ -21,12 +21,26 @@ const BookingCardWithCheckbox = ({
   booking,
 }: BookingCardWithCheckboxProps) => {
 
+  const dispatch = useDispatch();
   const {
     selectedBookings,
-    setSelectedBookings,
     analyseOnMapBookingId,
-    setAnalyseOnMapBookingId,
-  } = useCustomHook();
+  } = useSelector((state: { reduxHook: any }) => state.reduxHook);
+
+  const setSelectedBookings = (bookings: number[]) => {
+    dispatch({ type: "SET_SELECTED_BOOKINGS", payload: bookings });
+  };
+
+  const setAnalyseOnMapBookingId = (
+    bookingId: number | null,
+    source: { lat: number | null; long: number | null },
+    destination: { lat: number | null; long: number | null }
+  ) => {
+    dispatch({
+      type: "SET_ANALYSE_ON_MAP_BOOKING_ID",
+      payload: { bookingId, source, destination },
+    });
+  };
 
   const selected = selectedBookings.includes(booking.id);
 

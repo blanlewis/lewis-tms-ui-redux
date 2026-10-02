@@ -1,11 +1,12 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCustomHook } from "@/app/utils/customHook/hook";
 import { Box } from "@mui/material";
 import LayoutPaneRearrange from "@/components/LayoutPaneRearrange";
 import LayoutSwitchAndPaneReArrangement from "@/components/LayoutSwitchAndPaneReArrangement";
 import { LanguageSelectionIcon, LanguageSelectionOption } from "@/components/LanguageSelection";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/utils/redux2/store";
 
 const CommonMiniDrawerLayout = dynamic(
   () => import("@/components/CommonMiniDrawerLayout"),
@@ -13,7 +14,7 @@ const CommonMiniDrawerLayout = dynamic(
 );
 
 const AppWrapper = ({ children }: { children: React.ReactNode }) => {
-  const { loginId, setPopper } = useCustomHook();
+  const loginId = useSelector((state: RootState) => state.reduxHook.loginId);
 
   const isLoggedIn = Boolean(loginId);
 
@@ -36,12 +37,12 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
           customNode: <LayoutPaneRearrange />,
           onClick: (event) => {
             const anchorEl = event.currentTarget;
-            setPopper(
-              anchorEl,
-              <LayoutSwitchAndPaneReArrangement />,
-              "right",
-              "layout-pane-rearrange"
-            );
+            // setPopper(
+            //   anchorEl,
+            //   <LayoutSwitchAndPaneReArrangement />,
+            //   "right",
+            //   "layout-pane-rearrange"
+            // );
           },
         },
         {
@@ -49,12 +50,12 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
           customNode: <Box><LanguageSelectionIcon /></Box>,
           onClick: (event) => {
             const anchorEl = event.currentTarget;
-            setPopper(
-              anchorEl,
-              <LanguageSelectionOption />,
-              "right",
-              "language-selection"
-            );
+            // setPopper(
+            //   anchorEl,
+            //   <LanguageSelectionOption />,
+            //   "right",
+            //   "language-selection"
+            // );
           },
         },
       ]}

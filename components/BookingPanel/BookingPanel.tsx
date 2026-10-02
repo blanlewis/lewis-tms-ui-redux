@@ -1,8 +1,9 @@
 import { Box } from "@mui/material";
 import CustomTabs from "@/components/CustomTabs";
-import { useCustomHook } from "@/app/utils/customHook/hook";
+import { useDispatch, useSelector } from "react-redux";
+import { ReduxHookState } from "@/app/utils/redux2/types";
 import BookingCardWithCheckBox from "@/components/BookingCardWithCheckBox";
-import { BookingTabsDataEnum } from "@/app/utils/customHook/types";
+import { BookingTabsDataEnum } from "@/app/utils/redux2/types";
 
 const bookingData = [
   {
@@ -333,7 +334,13 @@ const bookingTabsData = [
 ];
 
 const BookingPanel = () => {
-  const { activeBookingTab, setActiveBookingTab } = useCustomHook();
+  const dispatch = useDispatch();
+  const { activeBookingTab } = useSelector(
+    (state: { reduxHook: ReduxHookState }) => state.reduxHook
+  );
+  const setActiveBookingTab = (value: string) => {
+    dispatch({ type: "SET_ACTIVE_BOOKING_TAB", payload: value });
+  };
   return (
     <Box sx={{ width: "100%", height: "100%" }}>
       <CustomTabs tabsData={bookingTabsData} value={activeBookingTab} setValue={setActiveBookingTab as (value: string) => void}/>

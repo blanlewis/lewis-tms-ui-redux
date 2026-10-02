@@ -2,19 +2,19 @@
 
 import { useEffect } from "react";
 import { redirect } from "next/navigation";
-import { useCustomHook } from "./utils/customHook/hook";
+import { RootState } from "@/app/utils/redux2/store";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUser } from "@/app/utils/redux2/functions";
 import {  Box, CircularProgress } from '@mui/material';
 import MyReactConceptLayout from "@/components/MyReactConceptLayout/MyReactConceptLayout";
 
 export default function Home() {
-    const {
-        loginId,
-        isSessionChecked,
-        getCurrentUser,
-    } = useCustomHook();
+    const dispatch = useDispatch();
+    const isSessionChecked = useSelector((state: RootState) => state.reduxHook.isSessionChecked);
+    const loginId = useSelector((state: RootState) => state.reduxHook.loginId);
 
     useEffect(() => {
-        getCurrentUser();
+        getCurrentUser(dispatch);
     }, []);
 
     if (!isSessionChecked) {
