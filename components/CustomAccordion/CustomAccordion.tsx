@@ -10,6 +10,7 @@ import CustomButton from "@/components/CustomButton";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setReduxHookState } from "@/app/redux2/reduxHookSlice";
+import ReduxHookState from "@/app/redux2/types";
 
 interface CustomAccordionProps {
   header: React.ReactNode;
@@ -26,12 +27,33 @@ const CustomAccordion = ({
 }: CustomAccordionProps) => {
   const dispatch = useDispatch();
 
-  const buttonName = useSelector(
-    (state: any) => state.reduxHook.buttonName
+  const reduxHookState = useSelector(
+    (state: { reduxHook: ReduxHookState }) => state.reduxHook
   );
 
   const handleButtonClick = () => {
-    dispatch(setReduxHookState("Save"));
+    dispatch(
+      setReduxHookState({
+        buttonName: "Save",
+        id: 10,
+      })
+    );
+  };
+
+  const handleButtonClick2 = () => {
+    dispatch(
+      setReduxHookState({
+        id: 20,
+      })
+    );
+  };
+
+  const handleButtonClick3 = () => {
+    dispatch(
+      setReduxHookState({
+        buttonName: "Delete",
+      })
+    );
   };
 
   return (
@@ -60,11 +82,57 @@ const CustomAccordion = ({
       <AccordionDetails>{body}</AccordionDetails>
 
       <CustomButton
-        buttonText={buttonName}
+        buttonText={reduxHookState.buttonName + " " + reduxHookState.id}
         buttonTextOrIconColor={"#1565C0"}
         icon={null}
         isButtonDisabled={false}
         onButtonClicked={handleButtonClick}
+        buttonMinWidth="100px"
+        buttonHeight="36px"
+        buttonFontSize="14px"
+        buttonBackgroundColor={"#0D47A1"}
+        buttonBorderColor={"#0D47A1"}
+        buttonBoxShadow={"0 2px 6px rgba(13, 71, 161, 0.35)"}
+        buttonPadding="6px 16px"
+        buttonBorderRadius="4px"
+        buttonHoverTextOrIconColor={"#0D47A1"}
+        buttonHoverBackgroundColor={"#08306B"}
+        buttonHoverBoxShadow={"0 3px 8px rgba(13, 71, 161, 0.45)"}
+        buttonHoverBorderColor={"#08306B"}
+        buttonDisabledBackgroundColor="#E0E0E0"
+        buttonDisabledTextColor="#9E9E9E"
+        buttonDisabledBorderColor="#E0E0E0"
+        buttonDisabledBoxShadow="none"
+      />
+        <CustomButton
+        buttonText={reduxHookState.buttonName + " " + reduxHookState.id}
+        buttonTextOrIconColor={"#1565C0"}
+        icon={null}
+        isButtonDisabled={false}
+        onButtonClicked={handleButtonClick2}
+        buttonMinWidth="100px"
+        buttonHeight="36px"
+        buttonFontSize="14px"
+        buttonBackgroundColor={"#0D47A1"}
+        buttonBorderColor={"#0D47A1"}
+        buttonBoxShadow={"0 2px 6px rgba(13, 71, 161, 0.35)"}
+        buttonPadding="6px 16px"
+        buttonBorderRadius="4px"
+        buttonHoverTextOrIconColor={"#0D47A1"}
+        buttonHoverBackgroundColor={"#08306B"}
+        buttonHoverBoxShadow={"0 3px 8px rgba(13, 71, 161, 0.45)"}
+        buttonHoverBorderColor={"#08306B"}
+        buttonDisabledBackgroundColor="#E0E0E0"
+        buttonDisabledTextColor="#9E9E9E"
+        buttonDisabledBorderColor="#E0E0E0"
+        buttonDisabledBoxShadow="none"
+      />
+        <CustomButton
+        buttonText={reduxHookState.buttonName + " " + reduxHookState.id}
+        buttonTextOrIconColor={"#1565C0"}
+        icon={null}
+        isButtonDisabled={false}
+        onButtonClicked={handleButtonClick3}
         buttonMinWidth="100px"
         buttonHeight="36px"
         buttonFontSize="14px"
