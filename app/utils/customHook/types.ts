@@ -34,9 +34,7 @@ interface CustomHookState {
         popperPlacement: "top" | "bottom" | "left" | "right";
         popupKey: string | null;
     };
-
     selectedBookings: number[];
-
     analyseOnMapBookingId: {
         bookingId: number | null;
         source: {
@@ -46,6 +44,14 @@ interface CustomHookState {
         destination: {
             lat: number | null;
             long: number | null;
+        };
+    };
+    bookings: {
+        bookingsList: BookingTypes[];
+        pageInfo: {
+            hasNextPage: boolean;
+            startCursor: string | null;
+            endCursor: string | null;
         };
     };
 }
@@ -126,6 +132,14 @@ const customHookInitialState: CustomHookState = {
         destination: {
             lat: null,
             long: null,
+        },
+    },
+    bookings: {
+        bookingsList: [],
+        pageInfo: {
+            hasNextPage: false,
+            startCursor: null,
+            endCursor: null,
         },
     },
 };

@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import CustomTabs from "@/components/CustomTabs";
-import { useCustomHook } from "@/app/utils/hook";
-import { BookingTabsDataEnum } from "@/app/utils/types";
+import { useCustomHook } from "@/app/utils/customHook/hook";
 import BookingCardWithCheckBox from "@/components/BookingCardWithCheckBox";
+import { BookingTabsDataEnum } from "@/app/utils/customHook/types";
 
 const bookingData = [
   {

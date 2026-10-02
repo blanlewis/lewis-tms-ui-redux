@@ -4,11 +4,11 @@ import Box from "@mui/material/Box";
 import CustomTabs from "@/components/CustomTabs";
 import { useState } from "react";
 import CustomButton from "@/components/CustomButton";
-import { useCustomHook } from "@/app/utils/hook";
+import { useCustomHook } from "@/app/utils/customHook/hook";
 import {
   PageLayoutEnum,
   PageLayoutPaneEnum,
-} from "@/app/utils/types";
+} from "@/app/utils/customHook/types";
 
 import ViewAgendaIcon from "@mui/icons-material/ViewAgenda";
 import AutoAwesomeMosaicIcon from "@mui/icons-material/AutoAwesomeMosaic";

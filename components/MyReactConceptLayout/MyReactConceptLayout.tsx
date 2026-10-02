@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
 import DossierPanel from "@/components/DossierPanel";
 import ReflexDragger from "@/components/ReflexDragger";
-import { useCustomHook } from "@/app/utils/hook";
+import { useCustomHook } from "@/app/utils/customHook/hook";
 import {
     PageLayoutEnum,
     PageLayoutPaneEnum,
-} from "@/app/utils/types";
+} from "@/app/utils/customHook/types";
 import dynamic from "next/dynamic";
 import BookingPanel from "@/components/BookingPanel";
 

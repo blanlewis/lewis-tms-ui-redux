@@ -3,7 +3,7 @@
 import Box from '@mui/material/Box';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Popper from '@mui/material/Popper';
-import { useCustomHook } from '@/app/utils/hook';
+import { useCustomHook } from '@/app/utils/customHook/hook';
 
 const CustomPopper = () => {
   const { popper, setPopper } = useCustomHook();

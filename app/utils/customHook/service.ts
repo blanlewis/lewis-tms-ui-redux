@@ -1,5 +1,5 @@
-import { getLoginUserMutationQuery,getCurrentUserQuery, getLogoutMutationQuery } from "./graphqlQueries";
-import { LoginResponse } from "./types";
+import { getLoginUserMutationQuery,getCurrentUserQuery, getLogoutMutationQuery, getBookingsQuery } from "./graphqlQueries";
+import { BookingTypes, LoginResponse } from "./types";
 
 const getLoginUserMutationApi = async (
     loginId: string,
@@ -101,4 +101,51 @@ const getLogoutMutationApi = async (): Promise<boolean> => {
     }
 };
 
-export { getLoginUserMutationApi, getCurrentUserApi, getLogoutMutationApi };
+const getBookingsApi = async (
+    first: number,
+    after: string | null
+): Promise<{
+    bookingsList: BookingTypes[];
+    pageInfo: {
+        hasNextPage: boolean;
+        startCursor: string | null;
+        endCursor: string | null;
+    };
+}> => {
+    const bookingsRequest = {
+        query: getBookingsQuery(first, after),
+    };
+    try {
+        const result = await fetch(
+            process.env.NEXT_PUBLIC_GRAPHQL_URL!,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify(bookingsRequest),
+            }
+        );
+        if (!result.ok) {
+            throw new Error(`HTTP Error: ${result.status}`);
+        }
+        const jsonResult = await result.json();
+        console.log("BOOKINGS RESPONSE:", jsonResult);
+        const bookingsData = jsonResult.data.bookings;
+        return {
+            bookingsList: bookingsData.edges.map(
+                (edge: {
+                    node: BookingTypes;
+                    cursor: string;
+                }) => edge.node
+            ),
+            pageInfo: bookingsData.pageInfo,
+        };
+    } catch (error) {
+        console.error("Failed to fetch bookings:", error);
+        throw error;
+    }
+};
+
+export { getLoginUserMutationApi, getCurrentUserApi, getLogoutMutationApi, getBookingsApi };

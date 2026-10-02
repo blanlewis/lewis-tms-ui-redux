@@ -9,8 +9,8 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { BookingTypes } from "@/app/utils/types";
-import { useCustomHook } from "@/app/utils/hook";
+import { BookingTypes } from "@/app/redux/types";
+import { useCustomHook } from "@/app/utils/customHook/hook";
 import CustomButton from "../CustomButton";
 
 type BookingCardWithCheckboxProps = {

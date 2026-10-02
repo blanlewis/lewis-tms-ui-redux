@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { redirect } from "next/navigation";
-import { useCustomHook } from "./utils/hook";
+import { useCustomHook } from "./utils/customHook/hook";
 import {  Box, CircularProgress } from '@mui/material';
 import MyReactConceptLayout from "@/components/MyReactConceptLayout/MyReactConceptLayout";
 

@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import CustomAvatar from "@/components/CustomAvatar";
 import CustomButton from "@/components/CustomButton";
-import { useCustomHook } from "@/app/utils/hook";
+import { useCustomHook } from "@/app/utils/customHook/hook";
 
 const ProfilePopup = ({ toolbarAvatar }: { toolbarAvatar: string }) => {
   const { logoutState } = useCustomHook();

@@ -34,7 +34,7 @@ import {
 } from "@mui/icons-material";
 
 import CustomAvatar from "@/components/CustomAvatar";
-import { useCustomHook } from "@/app/utils/hook";
+import { useCustomHook } from "@/app/utils/customHook/hook";
 import ProfilePopup from "./ProfilePopup";
 
 // ─────────────────────────────────────────────────────────────────────────────

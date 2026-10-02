@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCustomHook } from "@/app/utils/hook";
+import { useCustomHook } from "@/app/utils/customHook/hook";
 import { Box } from "@mui/material";
 import LayoutPaneRearrange from "@/components/LayoutPaneRearrange";
 import LayoutSwitchAndPaneReArrangement from "@/components/LayoutSwitchAndPaneReArrangement";

@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 import { Snackbar, SnackbarCloseReason, Alert, AlertColor, Slide, SlideProps } from '@mui/material';
-import { SnackbarSeverityEnum } from '@/app/utils/types';
-import { useCustomHook } from '@/app/utils/hook';
+import { SnackbarSeverityEnum } from '@/app/redux/types';
+import { useCustomHook } from '@/app/utils/customHook/hook';
 
 function SlideTransition(props: Readonly<SlideProps>) {
   return <Slide {...props} direction="left" timeout={{ enter: 300, exit: 0 }} />;

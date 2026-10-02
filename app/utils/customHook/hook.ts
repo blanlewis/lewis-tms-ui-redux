@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { CustomHookContext } from "./context";
-import { CustomHookState, CustomHookActionEnum, SnackbarSeverityEnum, PageLayoutEnum,BookingTabsDataEnum, PageLayoutPaneEnum } from "./types";
-import { getLoginUserMutationApi,getCurrentUserApi, getLogoutMutationApi } from "./service";
+import { CustomHookState, CustomHookActionEnum, SnackbarSeverityEnum, PageLayoutEnum,BookingTabsDataEnum, BookingTypes } from "./types";
+import { getLoginUserMutationApi,getCurrentUserApi, getLogoutMutationApi, getBookingsApi } from "./service";
 
 const useCustomHook = () => {
     const context = useContext(CustomHookContext);
@@ -179,6 +179,39 @@ const useCustomHook = () => {
         });
     };
 
+    const setBookings = (
+        bookingsList: BookingTypes[],
+        pageInfo: {
+            hasNextPage: boolean;
+            startCursor: string | null;
+            endCursor: string | null;
+        },
+        isFirstPage: boolean
+    ) => {
+        setCustomHookState({
+            bookings: {
+                bookingsList: isFirstPage
+                    ? bookingsList
+                    : [
+                        ...state.bookings.bookingsList,
+                        ...bookingsList,
+                    ],
+                pageInfo,
+            },
+        });
+    };
+
+    const fetchBookings = async (first: number, after: string | null) => {
+        try {
+            const bookingsResponse = await getBookingsApi(first, after);
+            setBookings(bookingsResponse.bookingsList, bookingsResponse.pageInfo, after === null);
+            return bookingsResponse;
+        } catch (error) {
+            console.error("Failed to fetch bookings:", error);
+            throw error;
+        }
+    };
+
     return {
         ...state,
         setCustomHookState,
@@ -192,6 +225,8 @@ const useCustomHook = () => {
         setPopper,
         setSelectedBookings,
         setAnalyseOnMapBookingId,
+        setBookings,
+        fetchBookings,
     };
 };
 

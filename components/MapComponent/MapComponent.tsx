@@ -8,7 +8,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import FlagCircleSharpIcon from "@mui/icons-material/FlagCircleSharp";
 import LocalShippingSharpIcon from "@mui/icons-material/LocalShippingSharp";
-import { useCustomHook } from "@/app/utils/hook";
+import { useCustomHook } from "@/app/utils/customHook/hook";
 
 // Leaflet needs a plain HTML icon, so a MUI icon is rendered to a marker once here.
 const createMuiMarkerIcon = (icon: React.ReactElement, size: number) =>

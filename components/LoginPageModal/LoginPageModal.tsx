@@ -6,7 +6,7 @@ import Image from "next/image";
 import CustomModal from "@/components/CustomModal";
 import CustomTextField from "@/components/CustomTextField";
 import CustomButton from "@/components/CustomButton";
-import { useCustomHook } from "@/app/utils/hook";
+import { useCustomHook } from "@/app/utils/customHook/hook";
 
 const LoginPageModal = () => {
   const [loginId, setLoginId] = useState("");
