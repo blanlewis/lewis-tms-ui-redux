@@ -9,7 +9,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { BookingTypes } from "@/app/redux/types";
+import { BookingTypes } from "@/app/utils/customHook/types";
 import { useCustomHook } from "@/app/utils/customHook/hook";
 import CustomButton from "../CustomButton";
 

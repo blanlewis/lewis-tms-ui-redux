@@ -6,6 +6,10 @@ import {
   AccordionDetails,
 } from "@mui/material";
 import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
+import CustomButton from "@/components/CustomButton";
+
+import { useDispatch, useSelector } from "react-redux";
+import { setReduxHookState } from "@/app/redux2/reduxHookSlice";
 
 interface CustomAccordionProps {
   header: React.ReactNode;
@@ -20,6 +24,16 @@ const CustomAccordion = ({
   isExpanded,
   onExpandChange,
 }: CustomAccordionProps) => {
+  const dispatch = useDispatch();
+
+  const buttonName = useSelector(
+    (state: any) => state.reduxHook.buttonName
+  );
+
+  const handleButtonClick = () => {
+    dispatch(setReduxHookState("Save"));
+  };
+
   return (
     <Accordion
       expanded={isExpanded}
@@ -43,9 +57,31 @@ const CustomAccordion = ({
         {header}
       </AccordionSummary>
 
-      <AccordionDetails>
-        {body}
-      </AccordionDetails>
+      <AccordionDetails>{body}</AccordionDetails>
+
+      <CustomButton
+        buttonText={buttonName}
+        buttonTextOrIconColor={"#1565C0"}
+        icon={null}
+        isButtonDisabled={false}
+        onButtonClicked={handleButtonClick}
+        buttonMinWidth="100px"
+        buttonHeight="36px"
+        buttonFontSize="14px"
+        buttonBackgroundColor={"#0D47A1"}
+        buttonBorderColor={"#0D47A1"}
+        buttonBoxShadow={"0 2px 6px rgba(13, 71, 161, 0.35)"}
+        buttonPadding="6px 16px"
+        buttonBorderRadius="4px"
+        buttonHoverTextOrIconColor={"#0D47A1"}
+        buttonHoverBackgroundColor={"#08306B"}
+        buttonHoverBoxShadow={"0 3px 8px rgba(13, 71, 161, 0.45)"}
+        buttonHoverBorderColor={"#08306B"}
+        buttonDisabledBackgroundColor="#E0E0E0"
+        buttonDisabledTextColor="#9E9E9E"
+        buttonDisabledBorderColor="#E0E0E0"
+        buttonDisabledBoxShadow="none"
+      />
     </Accordion>
   );
 };

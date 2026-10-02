@@ -13,3 +13,4 @@ const reduxHookSlice = createSlice({
 });
 
 export default reduxHookSlice.reducer;
+export const { setReduxHookState } = reduxHookSlice.actions;

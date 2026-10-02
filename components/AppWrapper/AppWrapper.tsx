@@ -56,7 +56,7 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
               "language-selection"
             );
           },
-        }
+        },
       ]}
       appBody={children}
       toolbarAvatar={loginId}
