@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { CustomHookContext } from "./context";
-import { CustomHookState, CustomHookActionEnum, SnackbarSeverityEnum, PageLayoutEnum,BookingTabsDataEnum, BookingTypes } from "./types";
+import { CustomHookState, CustomHookActionEnum, SnackbarSeverityEnum,BookingTabsDataEnum, BookingTypes } from "./types";
 import { getLoginUserMutationApi,getCurrentUserApi, getLogoutMutationApi, getBookingsApi } from "./service";
 
 const useCustomHook = () => {

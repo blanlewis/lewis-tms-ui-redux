@@ -7,8 +7,7 @@ import CustomPopper from "@/components/CustomPopper/CustomPopper";
 import { LanguageProvider } from "./utils/languageTranslation/LanguageContext";
 import IntlProviderWrapper from "./utils/languageTranslation/IntlProvider";
 import { CustomHookProvider } from "./utils/customHook/context";
-import store from "./redux2/store";
-import { Provider } from "react-redux";
+import ReduxProvider from "./redux2/ReduxProvider";
 export const metadata: Metadata = {
   title: "Lewis TMS",
   description: "Lewis Transport Management System",
@@ -22,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
-        {/* <Provider store={store}> */}
+        <ReduxProvider>
         <LanguageProvider>
           <IntlProviderWrapper> 
           <AppRouterCacheProvider>
@@ -34,7 +33,7 @@ export default function RootLayout({
           </AppRouterCacheProvider>
         </IntlProviderWrapper>
         </LanguageProvider>
-        {/* </Provider> */}
+        </ReduxProvider>
       </body>
     </html>
   );
