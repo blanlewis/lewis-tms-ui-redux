@@ -2,10 +2,17 @@
 
 import dynamic from "next/dynamic";
 import { Box } from "@mui/material";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+
 import LayoutPaneRearrange from "@/components/LayoutPaneRearrange";
 import LayoutSwitchAndPaneReArrangement from "@/components/LayoutSwitchAndPaneReArrangement";
-import { LanguageSelectionIcon, LanguageSelectionOption } from "@/components/LanguageSelection";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  LanguageSelectionIcon,
+  LanguageSelectionOption,
+} from "@/components/LanguageSelection";
+import CustomPopper from "@/components/CustomPopper";
+
 import { RootState } from "@/app/utils/redux2/store";
 
 const CommonMiniDrawerLayout = dynamic(
@@ -14,7 +21,30 @@ const CommonMiniDrawerLayout = dynamic(
 );
 
 const AppWrapper = ({ children }: { children: React.ReactNode }) => {
-  const loginId = useSelector((state: RootState) => state.reduxHook.loginId);
+  const loginId = useSelector(
+    (state: RootState) => state.reduxHook.loginId
+  );
+
+  const [popper, setPopper] = useState<{
+    anchorElForPopper: HTMLElement | null;
+    popperContent: React.ReactNode | null;
+    popperPlacement: "top" | "bottom" | "left" | "right";
+    popupKey: string | null;
+  }>({
+    anchorElForPopper: null,
+    popperContent: null,
+    popperPlacement: "bottom",
+    popupKey: null,
+  });
+
+  const handleClosePopper = () => {
+    setPopper({
+      anchorElForPopper: null,
+      popperContent: null,
+      popperPlacement: "bottom",
+      popupKey: null,
+    });
+  };
 
   const isLoggedIn = Boolean(loginId);
 
@@ -23,45 +53,61 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <CommonMiniDrawerLayout
-      appHeaderTitle="Lewis TMS"
-      firstListItems={[
-        {
-          label: "Lewis TMS Dashboard",
-          route: "/lewisTmsDashboardPage",
-        },
-      ]}
-      secondaryListItems={[
-        {
-          label: "layout-pane-rearrange",
-          customNode: <LayoutPaneRearrange />,
-          onClick: (event) => {
-            const anchorEl = event.currentTarget;
-            // setPopper(
-            //   anchorEl,
-            //   <LayoutSwitchAndPaneReArrangement />,
-            //   "right",
-            //   "layout-pane-rearrange"
-            // );
+    <>
+      <CommonMiniDrawerLayout
+        appHeaderTitle="Lewis TMS"
+        firstListItems={[
+          {
+            label: "Lewis TMS Dashboard",
+            route: "/lewisTmsDashboardPage",
           },
-        },
-        {
-          label: "language-selection",
-          customNode: <Box><LanguageSelectionIcon /></Box>,
-          onClick: (event) => {
-            const anchorEl = event.currentTarget;
-            // setPopper(
-            //   anchorEl,
-            //   <LanguageSelectionOption />,
-            //   "right",
-            //   "language-selection"
-            // );
+        ]}
+        secondaryListItems={[
+          {
+            label: "layout-pane-rearrange",
+            customNode: <LayoutPaneRearrange />,
+            onClick: (event) => {
+              const anchorEl = event.currentTarget;
+
+              setPopper({
+                anchorElForPopper: anchorEl,
+                popperContent: <LayoutSwitchAndPaneReArrangement />,
+                popperPlacement: "right",
+                popupKey: "layout-pane-rearrange",
+              });
+            },
           },
-        },
-      ]}
-      appBody={children}
-      toolbarAvatar={loginId}
-    />
+          {
+            label: "language-selection",
+            customNode: (
+              <Box>
+                <LanguageSelectionIcon />
+              </Box>
+            ),
+            onClick: (event) => {
+              const anchorEl = event.currentTarget;
+
+              setPopper({
+                anchorElForPopper: anchorEl,
+                popperContent: <LanguageSelectionOption />,
+                popperPlacement: "right",
+                popupKey: "language-selection",
+              });
+            },
+          },
+        ]}
+        appBody={children}
+        toolbarAvatar={loginId}
+      />
+
+      <CustomPopper
+        anchorElForPopper={popper.anchorElForPopper}
+        popperContent={popper.popperContent}
+        popperPlacement={popper.popperPlacement}
+        popupKey={popper.popupKey}
+        onClose={handleClosePopper}
+      />
+    </>
   );
 };
 

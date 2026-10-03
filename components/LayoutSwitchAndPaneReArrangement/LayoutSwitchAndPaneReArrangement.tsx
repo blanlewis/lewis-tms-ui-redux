@@ -3,16 +3,25 @@
 import Box from "@mui/material/Box";
 import CustomTabs from "@/components/CustomTabs";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import CustomButton from "@/components/CustomButton";
-import { useCustomHook } from "@/app/utils/customHook/hook";
+import ViewAgendaIcon from "@mui/icons-material/ViewAgenda";
+import AutoAwesomeMosaicIcon from "@mui/icons-material/AutoAwesomeMosaic";
+
+import CustomDragAndDrop from "@/components/CustomDragAndDrop";
+
 import {
   PageLayoutEnum,
   PageLayoutPaneEnum,
-} from "@/app/utils/customHook/types";
+} from "@/app/utils/redux2/types";
 
-import ViewAgendaIcon from "@mui/icons-material/ViewAgenda";
-import AutoAwesomeMosaicIcon from "@mui/icons-material/AutoAwesomeMosaic";
-import CustomDragAndDrop from "@/components/CustomDragAndDrop";
+import type {
+  RootState,
+  AppDispatch,
+} from "@/app/utils/redux2/store";
+
+import { setReduxHookState } from "@/app/utils/redux2/reduxHookSlice";
 
 const LayoutSwitchAndPaneReArrangement = () => {
   const [
@@ -20,30 +29,28 @@ const LayoutSwitchAndPaneReArrangement = () => {
     setActiveTabOfLayoutSwitchAndPaneReArrangement,
   ] = useState("layout-switch");
 
-  const { pageLayout, setPageLayout } = useCustomHook();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const pageLayout = useSelector(
+    (state: RootState) => state.reduxHook.pageLayout
+  );
 
   const selectedColor = "#2970FF";
   const defaultColor = "#344054";
   const hoverColor = "#2970FF";
 
-  const pageLayoutPaneToId: Record<
-    PageLayoutPaneEnum,
-    string
-  > = {
+  const pageLayoutPaneToId: Record<PageLayoutPaneEnum, string> = {
     [PageLayoutPaneEnum.DOSSIER_PANE]: "dossier",
     [PageLayoutPaneEnum.MAP_PANE]: "map",
     [PageLayoutPaneEnum.BOOKING_PANE]: "booking",
   };
 
-  const paneIdToPageLayoutPane: Record<
-    string,
-    PageLayoutPaneEnum
-  > = {
+  const paneIdToPageLayoutPane: Record<string, PageLayoutPaneEnum> = {
     dossier: PageLayoutPaneEnum.DOSSIER_PANE,
     map: PageLayoutPaneEnum.MAP_PANE,
     booking: PageLayoutPaneEnum.BOOKING_PANE,
   };
-  
+
   const paneOrder = [
     pageLayout.pane1,
     pageLayout.pane2,
@@ -82,11 +89,16 @@ const LayoutSwitchAndPaneReArrangement = () => {
               />
             }
             isButtonDisabled={false}
-            onButtonClicked={() =>
-              setPageLayout({
-                layout: PageLayoutEnum.TWO_PANEL_LAYOUT,
-              })
-            }
+            onButtonClicked={() => {
+              dispatch(
+                setReduxHookState({
+                  pageLayout: {
+                    ...pageLayout,
+                    layout: PageLayoutEnum.TWO_PANEL_LAYOUT,
+                  },
+                })
+              );
+            }}
             buttonMinWidth="100px"
             buttonHeight="36px"
             buttonFontSize="14px"
@@ -121,11 +133,16 @@ const LayoutSwitchAndPaneReArrangement = () => {
               />
             }
             isButtonDisabled={false}
-            onButtonClicked={() =>
-              setPageLayout({
-                layout: PageLayoutEnum.THREE_PANEL_LAYOUT,
-              })
-            }
+            onButtonClicked={() => {
+              dispatch(
+                setReduxHookState({
+                  pageLayout: {
+                    ...pageLayout,
+                    layout: PageLayoutEnum.THREE_PANEL_LAYOUT,
+                  },
+                })
+              );
+            }}
             buttonMinWidth="100px"
             buttonHeight="36px"
             buttonFontSize="14px"
@@ -160,11 +177,16 @@ const LayoutSwitchAndPaneReArrangement = () => {
               />
             }
             isButtonDisabled={false}
-            onButtonClicked={() =>
-              setPageLayout({
-                layout: PageLayoutEnum.CLASSIC,
-              })
-            }
+            onButtonClicked={() => {
+              dispatch(
+                setReduxHookState({
+                  pageLayout: {
+                    ...pageLayout,
+                    layout: PageLayoutEnum.CLASSIC,
+                  },
+                })
+              );
+            }}
             buttonMinWidth="100px"
             buttonHeight="36px"
             buttonFontSize="14px"
@@ -205,11 +227,16 @@ const LayoutSwitchAndPaneReArrangement = () => {
           <CustomDragAndDrop
             initialOrder={paneOrder}
             onRearrange={(newOrder) => {
-              setPageLayout({
-                pane1: paneIdToPageLayoutPane[newOrder[0]],
-                pane2: paneIdToPageLayoutPane[newOrder[1]],
-                pane3: paneIdToPageLayoutPane[newOrder[2]],
-              });
+              dispatch(
+                setReduxHookState({
+                  pageLayout: {
+                    ...pageLayout,
+                    pane1: paneIdToPageLayoutPane[newOrder[0]],
+                    pane2: paneIdToPageLayoutPane[newOrder[1]],
+                    pane3: paneIdToPageLayoutPane[newOrder[2]],
+                  },
+                })
+              );
             }}
           >
             {/* Dossier */}
