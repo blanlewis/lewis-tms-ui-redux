@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ReduxHookState } from "@/app/utils/redux2/types";
 import BookingCardWithCheckBox from "@/components/BookingCardWithCheckBox";
 import { BookingTabsDataEnum } from "@/app/utils/redux2/types";
+import { setReduxHookState } from "@/app/utils/redux2/reduxHookSlice";
 
 const bookingData = [
   {
@@ -335,12 +336,10 @@ const bookingTabsData = [
 
 const BookingPanel = () => {
   const dispatch = useDispatch();
-  const { activeBookingTab } = useSelector(
-    (state: { reduxHook: ReduxHookState }) => state.reduxHook
+  const activeBookingTab = useSelector(
+    (state: { reduxHook: ReduxHookState }) => state.reduxHook.activeBookingTab
   );
-  const setActiveBookingTab = (value: string) => {
-    dispatch({ type: "SET_ACTIVE_BOOKING_TAB", payload: value });
-  };
+  const setActiveBookingTab = (value: string) => dispatch(setReduxHookState({ activeBookingTab: value as BookingTabsDataEnum }));
   return (
     <Box sx={{ width: "100%", height: "100%" }}>
       <CustomTabs tabsData={bookingTabsData} value={activeBookingTab} setValue={setActiveBookingTab as (value: string) => void}/>

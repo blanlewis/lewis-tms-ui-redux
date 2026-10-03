@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import DossierPanel from "@/components/DossierPanel";
 import ReflexDragger from "@/components/ReflexDragger";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import type { ReduxHookState } from "@/app/utils/redux2/types";
 import {
     PageLayoutEnum,
