@@ -9,7 +9,8 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { BookingTypes } from "@/app/utils/redux2/types";
+import { BookingTypes, ReduxHookState } from "@/app/utils/redux2/types";
+import { setReduxHookState } from "@/app/utils/redux2/reduxHookSlice";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../CustomButton";
 
@@ -25,10 +26,10 @@ const BookingCardWithCheckbox = ({
   const {
     selectedBookings,
     analyseOnMapBookingId,
-  } = useSelector((state: { reduxHook: any }) => state.reduxHook);
+  } = useSelector((state: { reduxHook: ReduxHookState }) => state.reduxHook);
 
   const setSelectedBookings = (bookings: number[]) => {
-    dispatch({ type: "SET_SELECTED_BOOKINGS", payload: bookings });
+    dispatch(setReduxHookState({ selectedBookings: bookings }));
   };
 
   const setAnalyseOnMapBookingId = (
@@ -36,10 +37,11 @@ const BookingCardWithCheckbox = ({
     source: { lat: number | null; long: number | null },
     destination: { lat: number | null; long: number | null }
   ) => {
-    dispatch({
-      type: "SET_ANALYSE_ON_MAP_BOOKING_ID",
-      payload: { bookingId, source, destination },
-    });
+    dispatch(
+      setReduxHookState({
+        analyseOnMapBookingId: { bookingId, source, destination },
+      })
+    );
   };
 
   const selected = selectedBookings.includes(booking.id);
@@ -78,7 +80,6 @@ const BookingCardWithCheckbox = ({
         sx={{
           "&[data-active]": {
             backgroundColor: "action.selected",
-
             "&:hover": {
               backgroundColor: "action.selectedHover",
             },
